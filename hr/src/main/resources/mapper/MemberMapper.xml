@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.mapper.MemberMapper">
+    <!-- 전체 사원 목록-->
+    <select id="findAll" resultType="com.hr.domain.Member">
+        select * from Member
+    </select>
+
+    <!--이름으로 정보 조회 -->
+    <select id="findByName" resultType="com.hr.domain.Member">
+        select * from Member where name = #{name}
+    </select>
+
+    <!-- 사원 추가 -->
+    <insert id="join">
+        insert into Member (department, name, position1, position2,status)
+        values(#{department}, #{name}, #{position1}, #{position2},#{status})
+    </insert>
+</mapper>
