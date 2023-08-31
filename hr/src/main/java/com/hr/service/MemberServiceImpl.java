@@ -14,7 +14,9 @@ public class MemberServiceImpl implements MemberService{
     MemberMapper memberMapper;
     @Override
     public List<Member> getMemberList() {
-        return memberMapper.findAll();
+        List<Member> memberList = memberMapper.findAll();
+
+        return memberList;
     }
 
     @Override

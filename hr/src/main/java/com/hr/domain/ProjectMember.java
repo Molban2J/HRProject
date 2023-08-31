@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ProjectMember {
 
-    int proj_id;        //프로젝트 id    fk
+    String proj_name;        //프로젝트 id    fk
     int m_num;          //참여자 id      fk
     int importance;     //중요도
 }

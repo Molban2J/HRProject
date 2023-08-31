@@ -2,7 +2,7 @@ package com.hr.connection;
 
 import com.hr.domain.Member;
 import com.hr.domain.MemberStat;
-import com.hr.domain.Position;
+import com.hr.domain.Position1;
 import com.hr.domain.Position2;
 import com.hr.mapper.MemberMapper;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class DBConnectionUtilTest {
     @Test
     @Transactional
     void insert(){
-        Member member = new Member(null, "이소일", Position.TEAMMANAGER, Position2.HM, MemberStat.WORKING);
+        Member member = new Member(null, "이소일", Position1.TEAMMANAGER, Position2.HM, MemberStat.WORKING, "");
         memberMapper.join(member);
         Member test = memberMapper.findByName("이소일");
         test.setM_num(0);
