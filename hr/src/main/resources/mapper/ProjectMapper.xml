@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.mapper.ProjectMapper">
+    <select id="findAllProjects" resultType="com.hr.domain.Project">
+        select * from Project
+    </select>
+
+    <select id="findProjectByProjName" resultType="com.hr.domain.Project">
+        select * from Projec where proj_name = #{proj_name}
+    </select>
+    
+    <insert id="addProject">
+        insert into Project (proj_name, start_date)
+        values (#{proj_name}, #{start_date})
+    </insert>
+
+    <select id="findAllProjectMembers" resultType="com.hr.domain.ProjectMember">
+        select * from ProjectMember order by importance asc
+    </select>
+
+    <select id="findProjectLeader" resultType="java.util.Map">
+        SELECT
+            p.proj_name,
+            CASE WHEN pm.importance = 100 THEN m.name ELSE "" END AS name
+        FROM
+            Project p
+                LEFT JOIN
+            ProjectMember pm ON p.proj_name = pm.proj_name AND pm.importance = 100
+                LEFT JOIN
+            Member m ON pm.m_num = m.m_num
+    </select>
+
+    <select id="findMembersEachProj" resultType="java.util.Map">
+        SELECT
+            p.start_date,
+            p.proj_name,
+            m.name,
+            pm.importance
+        FROM
+            Project p
+                JOIN
+            ProjectMember pm ON p.proj_name = pm.proj_name
+                JOIN
+            Member m ON pm.m_num = m.m_num
+        ORDER BY
+            pm.importance ASC;
+    </select>
+
+    <insert id="addProjectMember">
+        insert into ProjectMember (proj_name,m_num,importance)
+        values (#{proj_name},#{m_name},#{importance})
+    </insert>
+</mapper>

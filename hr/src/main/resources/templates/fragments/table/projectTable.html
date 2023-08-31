@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:fmt="http://www.thymeleaf.org/extras/spring-form">
+<div th:fragment="projectTable">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        뉴미디어사업본부 프로젝트 명단
+    </div>
+    <div class="card-body">
+        <table id="datatablesProject">
+            <thead>
+            <tr>
+                <th>시작 날짜</th>
+                <th>프로젝트 명</th>
+                <th>책임자</th>
+                <th>참여자</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>시작 날짜</th>
+                <th>프로젝트 명</th>
+                <th>책임자</th>
+                <th>참여자</th>
+            </tr>
+            </tfoot>
+            <tbody>
+
+            <tr th:each="project:${projectList}">
+                <td style="width:10%;" th:text="${#dates.format(project.start_date, 'yyyy-MM-dd')}"></td>
+                <td th:text="${project.proj_name}"></td>
+                <th:block th:each="leader:${projectLeader}">
+                    <td th:if="${leader.proj_name == project.proj_name}" th:text="${leader.name}"></td>
+                </th:block>
+
+                    <td>
+                        <th:block th:each="member:${memberEachProject}" th:if="${project.proj_name == member.proj_name}">
+                            <th:block th:unless="${member.importance == 100}" th:text="${member.name}"></th:block>
+                        </th:block>
+                    </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
