@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4" >
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 mb-md-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Admin Login</h3></div>
+                        <div class="card-body">
+                            <form name="frm" method="post" action="/login">
+
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="id" name="id" type="text" placeholder="Id" required/>
+                                            <label for="id">Id</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="password" name="password" type="password" placeholder="password" required/>
+                                            <label for="password">Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button class="btn btn-primary btn-block join_button">Login</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+</html>

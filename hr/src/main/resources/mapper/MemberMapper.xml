@@ -13,9 +13,37 @@
         select * from Member where name = #{name}
     </select>
 
+    <!--id로 정보 조회 -->
+    <select id="findById" resultType="com.hr.domain.Member">
+        select * from Member where m_num = #{m_num}
+    </select>
+
     <!-- 사원 추가 -->
     <insert id="join">
-        insert into Member (department, name, position1, position2,status)
+        insert into Member (department, name, position1, position2, status)
         values(#{department}, #{name}, #{position1}, #{position2},#{status})
     </insert>
+    <!--부서 목록-->
+    <select id="getDept" resultType="com.hr.domain.Department">
+        select dept_name from Department
+    </select>
+    <!--직책 목록-->
+    <select id="getPosition1" resultType="com.hr.domain.Position1">
+        select * from Position1
+    </select>
+    <!--직급 목록-->
+    <select id="getPosition2" resultType="com.hr.domain.Position2">
+        select * from Position2
+    </select>
+
+    <!--명단 삭제-->
+    <delete id="deleteMember">
+        delete from Member where m_num=#{m_num}
+    </delete>
+
+    <update id="updateMember" parameterType="com.hr.domain.Member">
+        update Member
+        set name = #{name}, department=#{department}, position1 = #{position1}, position2=#{position2}, job_field=#{job_field}
+        where m_num = #{m_num}
+    </update>
 </mapper>

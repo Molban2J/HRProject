@@ -17,5 +17,4 @@ public class Department {
 
     String dept_name;   //부서명
 
-    Integer dept_head;   //부서장   fk
 }

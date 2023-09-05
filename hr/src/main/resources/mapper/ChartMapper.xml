@@ -5,28 +5,26 @@
 <mapper namespace="com.hr.mapper.ChartMapper">
 
     <select id="getLineChart" resultType="java.util.Map">
-
-        SELECT m.name AS label,
-               IFNULL(GROUP_CONCAT(lc.importance ORDER BY lc.chart_date SEPARATOR ','), NULL) AS data
-        FROM Member m
-                 LEFT JOIN LineChart lc ON lc.m_num = m.m_num
-            AND lc.chart_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY) AND CURRENT_DATE()
-        GROUP BY m.m_num;
+        SELECT m.name as label, GROUP_CONCAT(lc.importance ORDER BY lc.chart_date SEPARATOR ',') AS data
+        FROM LineChart lc
+                 JOIN Member m ON lc.m_num = m.m_num
+        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 14 DAY) AND #{date}
+        GROUP BY lc.m_num;
     </select>
 
     <select id="getDate" resultType="java.util.Date">
 
         SELECT distinct chart_date
         FROM LineChart lc
-        where lc.chart_date between DATE_SUB((current_date),INTERVAL 14 day) and (current_date)
+        where lc.chart_date between DATE_SUB(#{date},INTERVAL 14 day) and #{date}
         ORDER BY chart_date
     </select>
 
-    <select id="getImportanceName" resultType="com.hr.domain.LineChart">
+    <select id="getImportanceName" resultType="java.util.Map">
         SELECT m.name as label, lc.importance as data
         FROM Member m
         LEFT JOIN LineChart lc ON lc.m_num = m.m_num
-        WHERE lc.chart_date BETWEEN DATE_SUB((current_date), INTERVAL 14 DAY) AND (current_date)
+        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 14 DAY) AND #{date}
         ORDER BY lc.chart_date;
     </select>
 

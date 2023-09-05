@@ -1,17 +1,21 @@
 package com.hr.controller;
 
-import com.hr.domain.LineChart;
 import com.hr.service.ChartService;
+import com.hr.service.DWLService;
 import com.hr.service.MemberService;
 import com.hr.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,22 +23,36 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class MainController {
-    @Autowired
-    MemberService memberService;
+    final MemberService memberService;
 
-    @Autowired
-    ProjectService projectService;
+    final ProjectService projectService;
 
+    final ChartService chartService;
+
+    final DWLService dwlService;
     @Autowired
-    ChartService chartService;
+    public MainController(MemberService memberService, ProjectService projectService, ChartService chartService, DWLService dwlService) {
+        this.memberService = memberService;
+        this.projectService = projectService;
+        this.chartService = chartService;
+        this.dwlService = dwlService;
+    }
 
     @GetMapping("/")
-    public String mainGET(Model model){
+    public String mainGET(Model model) {
         log.info("main GET 실행");
-        model.addAttribute("projectMemberList", projectService.findAllProjectMembers());
-        model.addAttribute("memberEachProject",projectService.findMembersEachProj());
+
+        //design waiting list
+        model.addAttribute("dwl",dwlService.getAllDWL());
+        //design waiting list + 각 프로젝트 참여 멤버 리스트
+        model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
+        //각 프로젝트 참여자 리스트
+        model.addAttribute("memberEachProject", projectService.findMembersEachProj());
+        //프로젝트 책임자 리스트
         model.addAttribute("projectLeader", projectService.findProjectLeader());
+        //프로젝트 리스트
         model.addAttribute("projectList", projectService.findAllProjects());
+        //사원 전체 목록
         model.addAttribute("memberList", memberService.getMemberList());
         return "main";
     }
@@ -44,39 +62,52 @@ public class MainController {
         log.info("login GET 실행");
         return "login";
     }
-    @PostMapping("/login.do")
-    public String loginPOST(Model model){
-        log.info("login POST 실행");
-        model.getAttribute("id");
-        model.getAttribute("password");
-        return "redirect/main";
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        new SecurityContextLogoutHandler().logout(request,response,
+                SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/";
     }
 
-    @GetMapping("/tables")
-    public String tableTest(){
-        return "originSource/tables";
-    }
-
-//    @GetMapping("/getLineChart")
-//    @ResponseBody
-//    public List<Map<String,List<Integer>>> lineChartsGET(Model model){
-//        List<Map<String,List<Integer>>> data = chartService.getLineChart();
-//        model.addAttribute("chartDate", chartService.getLineChartDate());
-//        return data;
+//    @PostMapping("/login.do")
+//    public String loginPOST(Admin admin){
+//        log.info("login POST 실행");
+//
+//        return "redirect:/";
 //    }
+
+
     @GetMapping("/getLineChart")
     @ResponseBody
     public Map<String, Object> lineChartsGET(Model model) {
+
+        log.info("getLineChart GET 실행");
         Map<String, Object> responseData = new HashMap<>();
-        List<Map<String, List<Integer>>> data = chartService.getLineChart();
-        List<String> chartDate = chartService.getDate();
+        //List<Map<String, List<Integer>>> data = chartService.getLineChart();
+        Date date;
+        if (model.getAttribute("get_date") == null) {
+            date = new Date();
+        } else {
+            date = (Date) model.getAttribute("get_date");
+        }
+
+        List<Map<String, Object>> data = chartService.getLineChart(date);
+        List<String> chartDate = chartService.getDate(date);
 
         responseData.put("data", data);
         responseData.put("chartDate", chartDate);
-
-        model.addAttribute("responseData", responseData);
-
+        //log.info("getLineChart GET responseData = " + responseData);
         return responseData;
     }
 
+    @GetMapping("/designWaitingList")
+    public String designWaitingListGET(Model model){
+        log.info("designWaitingList GET 접속");
+        //design waiting list
+        model.addAttribute("dwl",dwlService.getAllDWL());
+        //design waiting list + 각 프로젝트 참여 멤버 리스트
+        model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
+        return "/designWaitingList";
+    }
 }

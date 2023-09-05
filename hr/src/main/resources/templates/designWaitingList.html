@@ -14,24 +14,12 @@
     </ol>
 
     <div class="card mb-4">
-        <div class="card mb-4">
-            <!--project list table-->
-            <th:block th:insert="fragments/table/projectTable :: projectTable"></th:block>
-        </div>
+
         <div class="card mb-4">
             <!--designWaitingTable list table-->
             <th:block th:insert="fragments/table/designWaitingTable :: designWaitingTable"></th:block>
         </div>
-        <div class="card mb-4">
-            <!--member list table-->
-            <th:block th:insert="fragments/table/memberTable :: memberTable"></th:block>
-        </div>
-        <div class="row">
-            <!-- area chart-->
-            <th:block th:replace="fragments/chart/areaChart :: areaChart"></th:block>
-            <!--bar chart-->
-            <th:block th:replace="fragments/chart/barChart :: barChart"></th:block>
-        </div>
+
     </div>
 </div>
 </html>

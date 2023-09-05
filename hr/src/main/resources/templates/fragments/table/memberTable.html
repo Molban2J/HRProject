@@ -2,7 +2,7 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="memberTable">
-    <div class="card-header">
+    <div class="card-header" style="font-size: large; font-weight: 550">
         <i class="fas fa-table me-1"></i>
         뉴미디어사업본부 인원 명단
     </div>
@@ -16,6 +16,7 @@
                 <th>직책</th>
                 <th>직급</th>
                 <th>분야</th>
+                <th>재직상태</th>
             </tr>
             </thead>
             <tfoot>
@@ -26,24 +27,18 @@
                 <th>직책</th>
                 <th>직급</th>
                 <th>분야</th>
+                <th>재직상태</th>
             </tr>
             </tfoot>
             <tbody>
             <tr th:each="member:${memberList}">
                 <td th:text="${member.m_num}"></td>
                 <td th:text="${member.name}"></td>
-                <!--
-                <td th:if="${member.department == 1}" th:text="기획팀"></td>
-                <td th:if="${member.department == 2}" th:text="개발팀"></td>
-                <td th:if="${member.department == 3}" th:text="제작팀"></td>
-                <td th:if="${member.department == 4}" th:text="설계팀"></td>
-                <td th:if="${member.department == 5}" th:text="영업기획팀"></td>
-                <td th:if="${member.department == null}" th:text="${member.department}"></td>
-                -->
                 <td th:text="${member.department}"></td>
-                <td th:text="${member.position1.getPosition1()}"></td>
-                <td th:text="${member.position2.getPosition2()}"></td>
+                <td th:text="${member.position1}"></td>
+                <td th:text="${member.position2}"></td>
                 <td th:text="${member.job_field}"></td>
+                <td th:text="${member.status}"></td>
             </tr>
             </tbody>
         </table>

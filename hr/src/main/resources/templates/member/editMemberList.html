@@ -1,0 +1,69 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4">
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            뉴미디어사업본부 인원 명단
+        </div>
+        <div class="card-body">
+
+                <table id="datatablesMember" class="text-lg-start col-auto">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>이름</th>
+                        <th>부서</th>
+                        <th>직책</th>
+                        <th>직급</th>
+                        <th>분야</th>
+                        <th>재직상태</th>
+                        <th>편집</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>이름</th>
+                        <th>부서</th>
+                        <th>직책</th>
+                        <th>직급</th>
+                        <th>분야</th>
+                        <th>재직상태</th>
+                        <th>편집</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr th:each="member:${memberList}">
+
+                        <td th:text="${member.m_num}"></td>
+                        <td class="user_name" th:text="${member.name}"></td>
+                        <td th:text="${member.department}"></td>
+                        <td th:text="${member.position1}"></td>
+                        <td th:text="${member.position2}"></td>
+                        <td th:text="${member.job_field}"></td>
+                        <td th:text="${member.status}"></td>
+                        <td>
+                            <button class="btn btn-outline-success edit_button">편집</button>
+                            <button class="btn btn-outline-danger delete_button">삭제</button>
+                            <input type="hidden" name="m_num" th:value="${member.m_num}">
+                            <input type="hidden" name="name" th:value="${member.name}">
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+        </div>
+    </div>
+</div>

@@ -19,14 +19,14 @@ public class Member {
 
     String name;        //이름
 
-    Position1 position1;    //직책(팀장 등)
+    String position1;    //직책(팀장 등)
 
-    Position2 position2;        //직급(인턴, 사원, 대리 등)
+    String position2;        //직급(인턴, 사원, 대리 등)
 
-    MemberStat status;      //재직 상태
+    String status;      //재직 상태
 
     String job_field;   //직무 분야
-    public Member(String department, String name, Position1 position1, Position2 position2, MemberStat status, String job_field) {
+    public Member(String department, String name, String position1, String position2, String status, String job_field) {
         this.department = department;
         this.name = name;
         this.position1 = position1;

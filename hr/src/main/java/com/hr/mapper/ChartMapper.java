@@ -10,10 +10,10 @@ import java.util.Map;
 @Mapper
 public interface ChartMapper {
 
-      List<Map<String,List<Integer>>> getLineChart();
+      List<Map<String,Object>> getLineChart(Date date);
 //    List<LineChart> getLineChart();
 
-      List<Date> getDate();
+      List<Date> getDate(Date date);
 
-      List<Map<String, Object>> getImportanceName();
+      List<Map<String, Object>> getImportanceName(Date date);
 }

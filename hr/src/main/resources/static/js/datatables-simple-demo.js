@@ -4,13 +4,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
     const datatablesProject = document.getElementById('datatablesProject');
     if (datatablesProject) {
-        new simpleDatatables.DataTable(datatablesProject,{
+        new simpleDatatables.DataTable(datatablesProject, {
             autoWidth: false,
-            columnDefs: [
-                { width: '10%', targets : [0] },
-                { width: '30%', targets : [1] },
-                { width: '10%', targets : [2] },
-                { width: '50%', targets : [3] }
+            columns: [
+                { width: 100, targets: 0 }
             ]
         });
     }
@@ -21,5 +18,14 @@ window.addEventListener('DOMContentLoaded', event => {
             autoWidth: true
         });
     }
+
+    const datatablesDWL = document.getElementById('designWaitingTable');
+    if (datatablesDWL) {
+        new simpleDatatables.DataTable(datatablesDWL,{
+            autoWidth: true
+        });
+    }
+
+
 
 });

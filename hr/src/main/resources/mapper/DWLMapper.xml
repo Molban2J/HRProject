@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.mapper.DWLMapper">
+    <select id="getAllDWL" resultType="com.hr.domain.DesignWaitingList">
+        select *
+        from DesignWaitingList
+    </select>
+
+    <select id="getAllDWLMember" resultType="java.util.Map">
+        SELECT dwl.dw_seq,
+               dwl.priority,
+               dwl.start_date,
+               dwl.end_date as end_date,
+               dwl.proj_name,
+               m.name,
+               dwl.progress
+        FROM DesignWaitingList dwl
+                 JOIN
+             DWLMember dwlm ON dwl.dw_seq = dwlm.dw_seq
+                 JOIN
+             Member m ON dwlm.m_num = m.m_num
+        ORDER BY dwl.priority ASC;
+    </select>
+</mapper>

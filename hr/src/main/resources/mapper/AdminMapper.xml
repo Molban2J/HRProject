@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.mapper.AdminMapper">
+    <select id="findUserById" resultType="com.hr.domain.Admin">
+        select * from User where id = #{id}
+    </select>
+    <insert id="addAdmin">
+        insert into User (id, password, role)
+        values (#{id},#{password},#{role})
+    </insert>
+</mapper>

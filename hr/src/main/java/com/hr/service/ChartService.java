@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface ChartService {
-        public List<Map<String,List<Integer>>> getLineChart();
+        public List<Map<String,Object>> getLineChart(Date date);
 //    public List<LineChart> getLineChart();
 
-        List<String> getDate();
+        List<String> getDate(Date date);
 
-        List<Map<String,Object>> getImportanceName();
+        List<Map<String,Object>> getImportanceName(Date date);
 }

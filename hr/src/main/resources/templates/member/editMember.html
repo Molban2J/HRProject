@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4" >
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 mb-md-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">정보 수정</h3></div>
+                        <div class="card-body">
+                            <form name="frm" id="join_form" method="post" action="/admin/editMember.do">
+                                <input type="hidden" name="m_num" th:value="${member.m_num}">
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="name" name="name" type="text" placeholder="이름" th:value="${member.name}" required/>
+                                            <label for="name">이름</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="department">부서</label>
+                                    <select class="form-select" id="department" name="department">
+                                        <option value="">미정</option>
+                                        <option th:each="department : ${deptList}"
+                                                th:value="${department.getDept_name()}"
+                                                th:text="${department.getDept_name()}"
+                                                th:selected="${department.dept_name == member.department}"></option>
+                                    </select>
+                                </div>
+
+                                <hr>
+                                <div class="col-md-6">
+                                    <label class="mb-3 mb-md-2" for="position1">직책</label>
+                                    <select class="form-select mb-3 mb-md-3" id="position1" name="position1">
+                                        <option value="">직책을 선택해 주세요</option>
+                                        <option th:each="position1 : ${position1List}"
+                                                th:value="${position1.position}"
+                                                th:text="${position1.position}"
+                                                th:selected="${position1.position == member.position1}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="position2">직급</label>
+                                    <select class="form-select" id="position2" name="position2">
+                                        <option value="">직급을 선택해 주세요</option>
+                                        <option th:each="position2 : ${position2List}"
+                                                th:value="${position2.position}"
+                                                th:text="${position2.position}"
+                                                th:selected="${position2.position == member.position2}"></option>></option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" name="job_field" id="job_field" type="text" th:value="${member.job_field}" placeholder="직무(ex. 2D, Unity...)" />
+                                            <label for="job_field">직무</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-md-6">
+                                    <label for="status"></label>
+                                    <select class="form-select" id="status" name="status">
+                                        <option value="재직중" th:selected="${member.status == '재직중'}">재직중</option>
+                                        <option value="휴직" th:selected="${member.status == '휴직'}">휴직</option>
+                                        <option value="퇴사" th:selected="${member.status == '퇴사'}">퇴직</option>
+                                    </select>
+                                </div>
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button class="btn btn-primary btn-block join_button">Edit Member</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+</script>
+</html>

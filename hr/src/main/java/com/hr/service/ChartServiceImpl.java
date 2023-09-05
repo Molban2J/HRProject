@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sound.sampled.Line;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ChartServiceImpl implements ChartService{
@@ -20,22 +17,42 @@ public class ChartServiceImpl implements ChartService{
     ChartMapper chartMapper;
 
     @Override
-    public List<Map<String,List<Integer>>> getLineChart() {
-        return chartMapper.getLineChart();
+    public List<Map<String,Object>> getLineChart(Date date) {
+
+        //데이터 가공
+        List<Map<String,Object>> lineChart = chartMapper.getLineChart(date);
+        List<Map<String,Object>> lineChart2 = new ArrayList<>();
+        for(int i = 0; i<2; i++){
+            //기존 key: data의 value = String형식을 key: data = List<Integer>로 바꿔줌
+            //기존 데이터
+            String originData = (String)lineChart.get(i).get("data");
+            //String[] -> ArrayList
+            String[] dataParts = originData.split(",");
+            ArrayList<Integer> dataArrayList = new ArrayList<>();
+            //새로운 반환값에 들어갈 새로운 Map
+            Map<String, Object> dataMap = new HashMap<>();
+            for (String dataPart : dataParts) {
+                dataArrayList.add(Integer.parseInt(dataPart));
+            }
+            dataMap.put("data",dataArrayList);
+            dataMap.put("label",lineChart.get(i).get("label"));
+        lineChart2.add(dataMap);
+        }
+        return lineChart2;
     }
 
     @Override
-    public List<Map<String, Object>> getImportanceName() {
-        return null;
+    public List<Map<String, Object>> getImportanceName(Date date) {
+        return chartMapper.getImportanceName(date);
     }
 
     @Override
-    public List<String> getDate() {
-        List<Date> dateList = chartMapper.getDate();
+    public List<String> getDate(Date date) {
+        List<Date> dateList = chartMapper.getDate(date);
         List<String> formattedDateList = new ArrayList<>();
-        for(Date date : dateList){
+        for(Date formatingddate : dateList){
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            formattedDateList.add(dateFormat.format(date));
+            formattedDateList.add(dateFormat.format(formatingddate));
         }
         return formattedDateList;
     }
