@@ -30,6 +30,7 @@ public class MainController {
     final ChartService chartService;
 
     final DWLService dwlService;
+
     @Autowired
     public MainController(MemberService memberService, ProjectService projectService, ChartService chartService, DWLService dwlService) {
         this.memberService = memberService;
@@ -43,7 +44,7 @@ public class MainController {
         log.info("main GET 실행");
 
         //design waiting list
-        model.addAttribute("dwl",dwlService.getAllDWL());
+        model.addAttribute("dwl", dwlService.getAllDWL());
         //design waiting list + 각 프로젝트 참여 멤버 리스트
         model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
         //각 프로젝트 참여자 리스트
@@ -58,14 +59,14 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String loginGET(){
+    public String loginGET() {
         log.info("login GET 실행");
         return "login";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        new SecurityContextLogoutHandler().logout(request,response,
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response,
                 SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/";
     }
@@ -102,12 +103,20 @@ public class MainController {
     }
 
     @GetMapping("/designWaitingList")
-    public String designWaitingListGET(Model model){
+    public String designWaitingListGET(Model model) {
         log.info("designWaitingList GET 접속");
         //design waiting list
-        model.addAttribute("dwl",dwlService.getAllDWL());
+        model.addAttribute("dwl", dwlService.getAllDWL());
         //design waiting list + 각 프로젝트 참여 멤버 리스트
         model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
         return "/designWaitingList";
+    }
+
+    @GetMapping("/member")
+    public String memberGET(Model model){
+        log.info("member GET 접속");
+        //사원 전체 목록
+        model.addAttribute("memberList", memberService.getMemberList());
+        return "/member";
     }
 }

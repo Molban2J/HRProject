@@ -2,9 +2,11 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="memberTable">
-    <div class="card-header" style="font-size: large; font-weight: 550">
+    <div class="card-header" style="font-size: large; font-weight: 550; display: flex; align-items: center;">
         <i class="fas fa-table me-1"></i>
         뉴미디어사업본부 인원 명단
+        <a class="btn btn-outline-success" style="font-size: 0.8rem; margin-left: auto;" href="/admin/member">수정
+        </a>
     </div>
     <div class="card-body">
         <table id="datatablesMember">

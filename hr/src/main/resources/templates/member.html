@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4">
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header" style="font-size: large; font-weight: 550; display: flex; align-items: center;">
+            <i class="fas fa-table me-1"></i>
+            뉴미디어사업본부 인원 명단
+            <a class="btn btn-outline-success" style="font-size: 0.8rem; margin-left: auto;" href="/admin/member">수정
+            </a>
+        </div>
+        <div class="card-body">
+            <table id="memberList">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>이름</th>
+                    <th>부서</th>
+                    <th>직책</th>
+                    <th>직급</th>
+                    <th>분야</th>
+                    <th>재직상태</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>이름</th>
+                    <th>부서</th>
+                    <th>직책</th>
+                    <th>직급</th>
+                    <th>분야</th>
+                    <th>재직상태</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr th:each="member:${memberList}">
+                    <td th:text="${member.m_num}"></td>
+                    <td th:text="${member.name}"></td>
+                    <td th:text="${member.department}"></td>
+                    <td th:text="${member.position1}"></td>
+                    <td th:text="${member.position2}"></td>
+                    <td th:text="${member.job_field}"></td>
+                    <td th:text="${member.status}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</html>

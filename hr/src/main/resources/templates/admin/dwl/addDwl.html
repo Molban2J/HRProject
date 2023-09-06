@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4" >
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 mb-md-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Design Waiting List 추가</h3></div>
+                        <div class="card-body">
+                            <form name="frm" id="join_form" method="post" action="/admin/addDwl.do">
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="proj_name" name="proj_name" type="text" placeholder="프로젝트 명" required/>
+                                            <label for="proj_name">프로젝트 명</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="priority">우선도</label>
+                                    <input class="form-control" id="priority" name="priority" min="1" type="number" placeholder="우선도(ex. 1)" required/>
+                                </div>
+
+                                <hr>
+                                <div class="col-md-6">
+                                    <label class="mb-3 mb-md-2" for="start_datepicker">일정</label>
+                                    <input class="form-control" type="text" id="start_datepicker" name="start_date"/>
+
+                                </div>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="position2">마감</label>
+                                    <select class="form-select" id="position2" name="position2">
+                                        <option value="" selected>직급을 선택해 주세요</option>
+
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" name="job_field" id="job_field" type="text" placeholder="직무(ex. 2D, Unity...)" />
+                                            <label for="job_field">직무</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-md-6 slidecontainer">
+                                    <label for="progress">진척도</label>
+                                    <p><span id="progressval"></span>%</p>
+                                    <input class="slider" id="progress" step="20" value="0" type="range" name="progress" min="0" max="100" list="progressvalue">
+                                    <datalist id="progressvalue">
+                                        <option>0</option>
+                                        <option>20</option>
+                                        <option>40</option>
+                                        <option>60</option>
+                                        <option>80</option>
+                                        <option>100</option>
+                                    </datalist>
+
+                                </div>
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button class="btn btn-primary btn-block join_button">Add Member</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

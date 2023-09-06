@@ -12895,7 +12895,7 @@ body {
     appearance: none;
     width: 100%; /* Full-width */
     height: 25px; /* Specified height */
-    background: none; /* Grey background */
+    background: #d9d9d9; /* Grey background */
     outline: none; /* Remove outline */
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */

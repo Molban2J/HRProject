@@ -2,10 +2,12 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="designWaitingTable">
-    <div class="card-header justify-content-center" style="font-size: large; font-weight: 550">
+    <div class="card-header"
+         style="font-size: large; font-weight: 550; display: flex; align-items: center;">
         <i class="fas fa-table me-1"></i>
         Design Waiting List
-        <button class="btn btn-outline-success float-sm-end" style="font-size: small" href="/admin/dwlEdit">수정 / 편집</button>
+        <a class="btn btn-outline-success" style="font-size: 0.8rem; margin-left: auto;" href="/admin/editDwl">수정
+        </a>
     </div>
     <div class="card-body">
         <table id="designWaitingTable">
@@ -39,13 +41,15 @@
                     </th:block>
                 </td>
                 <td>
-<!--                    <div class="slidecontainer" >-->
-<!--                        <div class="custom-bar" id="custom-bar" th:style="'width:'+${dw.progress}+'%'"></div>-->
-<!--                        <label for="progressbar"></label><input type="range" min="0" max="100" step="20" th:value="${dw.progress}" class="slider" id="progressbar">-->
-<!--                    </div>-->
+                    <!--                    <div class="slidecontainer" >-->
+                    <!--                        <div class="custom-bar" id="custom-bar" th:style="'width:'+${dw.progress}+'%'"></div>-->
+                    <!--                        <label for="progressbar"></label><input type="range" min="0" max="100" step="20" th:value="${dw.progress}" class="slider" id="progressbar">-->
+                    <!--                    </div>-->
 
                     <div class="progress-bar-container">
-                        <div class="progress-bar" th:style="'width: ' + ${dw.progress}+'%'" th:text="${dw.progress}+'%'">50%</div>
+                        <div class="progress-bar" th:style="'width: ' + ${dw.progress}+'%'"
+                             th:text="${dw.progress}+'%'">50%
+                        </div>
                     </div>
                 </td>
                 <td th:text="${#dates.format(dw.start_date, 'yyyy-MM-dd')}"></td>

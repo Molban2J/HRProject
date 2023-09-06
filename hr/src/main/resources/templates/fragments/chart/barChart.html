@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <div th:fragment="barChart" class="col-xl-6">
   <div class="card mb-4">
     <div class="card-header">
@@ -10,4 +11,8 @@
     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
   </div>
 </div>
+
+<th:block layout:fragment="script">
+  <script src="/assets/demo/chart-bar-demo.js"></script>
+</th:block>
 </html>

@@ -29,7 +29,7 @@ public class AdminController {
         model.addAttribute("deptList", memberService.getDept());
         model.addAttribute("position1List", memberService.getPosition1());
         model.addAttribute("position2List", memberService.getPosition2());
-        return "member/addMember";
+        return "/admin/member/addMember";
     }
 
     @PostMapping("/addMember.do")
@@ -48,7 +48,7 @@ public class AdminController {
     public String editMemberListGET(Model model) {
         log.info("editMemberList GET 실행");
         model.addAttribute("memberList", memberService.getMemberList());
-        return "/member/editMemberList";
+        return "/admin/member/editMemberList";
     }
 
     @GetMapping("/deleteMember")
@@ -67,20 +67,25 @@ public class AdminController {
         model.addAttribute("deptList", memberService.getDept());
         model.addAttribute("position1List", memberService.getPosition1());
         model.addAttribute("position2List", memberService.getPosition2());
-        return "/member/editMember";
+        return "/admin/member/editMember";
     }
 
     @PostMapping("/editMember.do")
-    public String editMemberPOST(Member member){
+    public String editMemberPOST(Member member) {
         log.info("editMember POST 실행");
         log.info("수정 회원 = " + member);
-        if(member.getDepartment().isEmpty()){
+        if (member.getDepartment().isEmpty()) {
             member.setDepartment(null);
         }
-        if(member.getJob_field().isEmpty()){
+        if (member.getJob_field().isEmpty()) {
             member.setJob_field(null);
         }
         memberService.updateMember(member);
         return "redirect:/admin/member";
+    }
+
+    @GetMapping("/addDwl")
+    public String addDwlGET(){
+        return "/admin/dwl/addDwl";
     }
 }
