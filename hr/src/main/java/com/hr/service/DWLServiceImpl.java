@@ -1,6 +1,7 @@
 package com.hr.service;
 
 import com.hr.domain.DesignWaitingList;
+import com.hr.domain.DesignWaitingListMember;
 import com.hr.mapper.DWLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,35 @@ public class DWLServiceImpl implements DWLService{
     public List<Map<String, Object>> getAllDWLMember() {
 
         return dwlMapper.getAllDWLMember();
+    }
+
+    @Override
+    public DesignWaitingList findDWLByProjName(String proj_name) {
+        return dwlMapper.findDWLByProjName(proj_name);
+    }
+
+    @Override
+    public List<Map<String, Object>> findDWLMBySeq(int dw_seq) {
+        return dwlMapper.findDWLMBySeq(dw_seq);
+    }
+
+    @Override
+    public void addDWL(DesignWaitingList dwl) {
+        dwlMapper.addDWL(dwl);
+    }
+
+    @Override
+    public void addDWLM(DesignWaitingListMember dwlm) {
+        dwlMapper.addDWLM(dwlm);
+    }
+
+    @Override
+    public void deleteDWL(int dw_seq) {
+        dwlMapper.deleteDWL(dw_seq);
+    }
+
+    @Override
+    public DesignWaitingList findDWLBySeq(int dw_seq) {
+        return dwlMapper.findDWLBySeq(dw_seq);
     }
 }

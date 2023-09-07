@@ -6,7 +6,7 @@
 >
 
 <!-- content fragment 사용 -->
-<div layout:fragment="content" class="container-fluid px-4" >
+<div layout:fragment="content" class="container-fluid px-4">
     <h1 class="mt-4">뉴미디어사업본부</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active"></li>
@@ -17,13 +17,15 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7 mb-md-5">
                     <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Design Waiting List 추가</h3></div>
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Design Waiting List
+                            추가</h3></div>
                         <div class="card-body">
-                            <form name="frm" id="dwl_add_form" method="post" action="/admin/addDwl.do">
+                            <form name="frm" id="dwl_add_form" method="post" action="/admin/editDwl.do">
                                 <div class="form-floating mb-3">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="proj_name" name="proj_name" type="text" placeholder="프로젝트 명" required/>
+                                            <input class="form-control" id="proj_name" th:value="${dw.proj_name}"
+                                                   name="proj_name" type="text" placeholder="프로젝트 명" required/>
                                             <label for="proj_name">프로젝트 명</label>
                                         </div>
                                     </div>
@@ -31,18 +33,24 @@
                                 <hr>
                                 <div class="col-md-6 mb-30 mb-md-4">
                                     <label class="mb-md-2" for="priority">우선도</label>
-                                    <input class="form-control md" id="priority" name="priority" value="1" min="1" type="number" placeholder="우선도(ex. 1)" required/>
+                                    <input class="form-control md" id="priority" name="priority"
+                                           th:value="${dw.priority}" min="1" type="number" placeholder="우선도(ex. 1)"
+                                           required/>
                                 </div>
                                 <hr>
                                 <div class="col-md-6" id="selectContainer">
                                     <p>멤버</p>
-                                    <input type="hidden" id="memberCount" name="memberCount" value="1">
-                                    <label for="member1"></label>
-                                    <select class="form-select mb-md-3 member1" style="width: 35%" id="member1" name="m_num">
-                                        <option th:each="member:${memberList}"
-                                                th:value="${member.m_num}"
-                                                th:text="${member.name}"></option>
-                                    </select>
+                                    <input type="hidden" id="memberCount" name="memberCount" th:value="${dwms.size()}">
+                                    <div class="mb-md-3 selectDiv" style="display: flex; align-items: center;" th:each="dwm:${dwms}">
+                                        <select class="form-select mb-md-3 member1" style="width: 35%; margin-right:1rem;"
+                                                name="m_num">
+                                            <option th:each="member:${memberList}"
+                                                    th:value="${member.m_num}"
+                                                    th:text="${member.name}"
+                                                    th:selected="${member.m_num == dwm.get('m_num')}"></option>
+                                        </select>
+                                        <a id="memberRemove" class=" mb-md-3 btn btn-light btn-outline-dark">-</a>
+                                    </div>
                                 </div>
                                 <div>
                                     <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
@@ -50,18 +58,19 @@
                                 <hr>
                                 <div class="col-md-6">
                                     <label class="mb-3 mb-md-2" for="start_datepicker">일정</label>
-                                    <input class="form-control" type="date" id="start_datepicker" name="start_date"/>
+                                    <input class="form-control" type="date" id="start_datepicker" th:value="${#dates.format(dw.start_date, 'yyyy-MM-dd')}" name="start_date"/>
 
                                 </div>
                                 <div class="col-md-6 mb-30 mb-md-4">
                                     <label class="mb-md-2" for="end_time">마감</label>
-                                    <input type="date" id="end_time" class="form-control" name="end_date">
+                                    <input type="date" id="end_time" class="form-control" th:value="${#dates.format(dw.end_date, 'yyyy-MM-dd')}" name="end_date">
                                 </div>
                                 <hr>
                                 <div class="col-md-6 slidecontainer">
                                     <label for="progress">진척도</label>
                                     <p><span id="progressval"></span>%</p>
-                                    <input class="slider" id="progress" step="20" value="0" type="range" name="progress" min="0" max="100" list="progressvalue">
+                                    <input class="slider" id="progress" step="20" th:value="${dw.progress}" type="range" name="progress"
+                                           min="0" max="100" list="progressvalue">
                                     <datalist id="progressvalue">
                                         <option>0</option>
                                         <option>20</option>
@@ -73,7 +82,9 @@
 
                                 </div>
                                 <div class="mt-4 mb-0">
-                                    <div class="d-grid"><button class="btn btn-primary btn-block dwl_add_button">추가</button></div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary btn-block dwl_add_button">수정</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

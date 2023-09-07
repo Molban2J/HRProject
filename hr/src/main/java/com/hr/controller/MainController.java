@@ -38,7 +38,8 @@ public class MainController {
         this.chartService = chartService;
         this.dwlService = dwlService;
     }
-
+    
+    //홈 화면
     @GetMapping("/")
     public String mainGET(Model model) {
         log.info("main GET 실행");
@@ -78,12 +79,12 @@ public class MainController {
 //        return "redirect:/";
 //    }
 
-
+    //linchart ajax
     @GetMapping("/getLineChart")
     @ResponseBody
     public Map<String, Object> lineChartsGET(Model model) {
 
-        log.info("getLineChart GET 실행");
+        //log.info("getLineChart GET 실행");
         Map<String, Object> responseData = new HashMap<>();
         //List<Map<String, List<Integer>>> data = chartService.getLineChart();
         Date date;
@@ -101,17 +102,20 @@ public class MainController {
         //log.info("getLineChart GET responseData = " + responseData);
         return responseData;
     }
-
+    
+    //DWL 페이지
     @GetMapping("/designWaitingList")
     public String designWaitingListGET(Model model) {
         log.info("designWaitingList GET 접속");
         //design waiting list
         model.addAttribute("dwl", dwlService.getAllDWL());
+        log.info("designWaitingList = "+ dwlService.getAllDWL());
         //design waiting list + 각 프로젝트 참여 멤버 리스트
         model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
         return "/designWaitingList";
     }
-
+    
+    // 멤버 명단 페이지
     @GetMapping("/member")
     public String memberGET(Model model){
         log.info("member GET 접속");

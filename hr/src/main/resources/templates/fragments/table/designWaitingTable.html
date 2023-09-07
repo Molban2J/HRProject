@@ -53,7 +53,7 @@
                     </div>
                 </td>
                 <td th:text="${#dates.format(dw.start_date, 'yyyy-MM-dd')}"></td>
-                <td th:text="${dw.end_date == null ? '진행중' : dw.end_date}"></td>
+                <td th:text="${dw.end_date == null ? '진행중' : #dates.format(dw.end_date, 'yyyy-MM-dd')}"></td>
             </tr>
             </tbody>
         </table>

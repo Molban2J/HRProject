@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content">
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header" style="font-size: large; font-weight: 550; display: flex; align-items: center;">
+            <i class="fas fa-table me-1"></i>
+            Design Waiting List
+
+        </div>
+        <div class="card-body">
+            <table id="designWaitingTable">
+                <thead>
+                <tr>
+                    <th>우선순위</th>
+                    <th>프로젝트</th>
+                    <th>담당자</th>
+                    <th>진행률</th>
+                    <th>시작일</th>
+                    <th>종료일/마감일</th>
+                    <th>편집</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>우선순위</th>
+                    <th>프로젝트</th>
+                    <th>담당자</th>
+                    <th>진행률</th>
+                    <th>시작일</th>
+                    <th>종료일/마감일</th>
+                    <th>편집</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr th:each="dw : ${dwl}">
+                    <td th:text="${dw.priority}"></td>
+                    <td th:text="${dw.proj_name}"></td>
+                    <td>
+                        <th:block th:each="dwlMember:${dwlMemberList}"
+                                  th:if="${dw.proj_name == dwlMember.proj_name}">
+                            <th:block th:text="${dwlMember.name}"></th:block>
+                        </th:block>
+                    </td>
+                    <td>
+                        <!--                    <div class="slidecontainer" >-->
+                        <!--                        <div class="custom-bar" id="custom-bar" th:style="'width:'+${dw.progress}+'%'"></div>-->
+                        <!--                        <label for="progressbar"></label><input type="range" min="0" max="100" step="20" th:value="${dw.progress}" class="slider" id="progressbar">-->
+                        <!--                    </div>-->
+
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" th:style="'width: ' + ${dw.progress}+'%'"
+                                 th:text="${dw.progress}+'%'">50%
+                            </div>
+                        </div>
+                    </td>
+                    <td th:text="${#dates.format(dw.start_date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${dw.end_date == null ? '진행중' : #dates.format(dw.end_date, 'yyyy-MM-dd')}"></td>
+                    <td>
+                        <button class="btn btn-outline-success dwl_edit_button">수정</button>
+                        <button class="btn btn-outline-danger dwl_delete_button">삭제</button>
+                        <input type="hidden" name="dw_seq" th:value="${dw.dw_seq}">
+                        <input type="hidden" name="proj_name" th:value="${dw.proj_name}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

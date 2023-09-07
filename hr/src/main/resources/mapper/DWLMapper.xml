@@ -6,11 +6,12 @@
     <select id="getAllDWL" resultType="com.hr.domain.DesignWaitingList">
         select *
         from DesignWaitingList
+        ORDER BY priority ASC
     </select>
 
     <select id="getAllDWLMember" resultType="java.util.Map">
-        SELECT dwl.dw_seq,
-               dwl.priority,
+        SELECT dwl.priority,
+               dwl.dw_seq,
                dwl.start_date,
                dwl.end_date as end_date,
                dwl.proj_name,
@@ -21,6 +22,45 @@
              DWLMember dwlm ON dwl.dw_seq = dwlm.dw_seq
                  JOIN
              Member m ON dwlm.m_num = m.m_num
-        ORDER BY dwl.priority ASC;
+        ORDER BY dwl.priority ASC
     </select>
+
+    <select id="findDWLByProjName" resultType="com.hr.domain.DesignWaitingList">
+        select *
+        from DesignWaitingList
+        where proj_name = #{proj_name}
+    </select>
+
+    <select id="findDWLMBySeq" resultType="java.util.Map">
+        SELECT dwl.dw_seq,
+               m.m_num
+        FROM DesignWaitingList dwl
+                 JOIN
+             DWLMember dwlm ON dwl.dw_seq = dwlm.dw_seq
+                 JOIN
+             Member m ON dwlm.m_num = m.m_num
+        where dwl.dw_seq = #{dw_seq}
+    </select>
+
+    <select id="findDWLBySeq" resultType="com.hr.domain.DesignWaitingList">
+        select *
+        from DesignWaitingList
+        where dw_seq = #{dw_seq}
+    </select>
+    <insert id="addDWL">
+        insert into DesignWaitingList
+            (proj_name, start_date, end_date, priority, progress)
+        values (#{proj_name}, #{start_date}, #{end_date}, #{priority}, #{progress})
+    </insert>
+
+    <insert id="addDWLM">
+        insert into DWLMember
+            (dw_seq, m_num)
+        values (#{dw_seq}, #{m_num})
+    </insert>
+
+    <delete id="deleteDWL">
+        delete from DesignWaitingList
+        where dw_seq = #{dw_seq}
+    </delete>
 </mapper>
