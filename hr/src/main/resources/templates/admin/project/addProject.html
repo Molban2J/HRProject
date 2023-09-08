@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4" >
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 mb-md-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Project 추가</h3></div>
+                        <div class="card-body">
+                            <form name="frm" id="dwl_add_form" method="post" action="/admin/addProject.do">
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="proj_name" name="proj_name" type="text" placeholder="프로젝트 명" required/>
+                                            <label for="proj_name">프로젝트 명</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row" id="selectContainer">
+
+                                    <input type="hidden" id="memberCount" name="memberCount" value="1">
+                                    <div class="col-xl-6">
+                                        <p>멤버</p>
+                                    <label for="member1"></label>
+                                    <select class="form-select mb-md-3 member1" style="width: 35%" id="member1" name="m_num">
+                                        <option>멤버를 선택해주세요</option>
+                                        <option th:each="member:${memberList}"
+                                                th:value="${member.m_num}"
+                                                th:text="${member.name}"></option>
+                                    </select>
+                                    </div>
+                                    <div class="col-xl-6 slidecontainer" style="width: 50%">
+                                        <p>중요도</p>
+                                        <label for="progress"></label>
+                                        <p><span id="progressval"></span>%</p>
+                                        <input class="slider" id="progress" step="20" value="0" type="range" name="importance" min="0" max="100" list="progressvalue">
+                                        <datalist id="progressvalue">
+                                            <option>0</option>
+                                            <option>20</option>
+                                            <option>40</option>
+                                            <option>60</option>
+                                            <option>80</option>
+                                            <option>100</option>
+                                        </datalist>
+
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
+                                </div>
+                                <hr>
+                                <div class="col-md-6">
+                                    <label class="mb-3 mb-md-2" for="start_date">시작일</label>
+                                    <input class="form-control" type="date" id="start_date" name="start_date"/>
+                                </div>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="end_date">마감일</label>
+                                    <input type="date" id="end_date" class="form-control" name="end_date" placeholder="마감일을 입력하시면 완료 프로젝트로 분류됩니다.">
+                                </div>
+                                <hr>
+
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button class="btn btn-primary btn-block dwl_add_button">추가</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

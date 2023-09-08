@@ -13,7 +13,7 @@ public interface ProjectService {
 
     public void addProject(Project project);
 
-    public List<ProjectMember> findAllProjectMembers();
+    public List<Map<String, Object>> findAllProjectMembers();
 
     public List<Map<String, Object>> findProjectLeader();
 

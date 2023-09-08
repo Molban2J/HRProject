@@ -63,4 +63,16 @@
         delete from DesignWaitingList
         where dw_seq = #{dw_seq}
     </delete>
+
+    <delete id="deleteDWLMBySeq">
+        delete from DWLMember
+        where dw_seq = #{dw_seq}
+    </delete>
+
+    <update id="updateDWL">
+        update DesignWaitingList
+        set proj_name = #{proj_name}, priority = #{priority}, start_date = #{start_date},
+            end_date = #{end_date}, progress = #{progress}
+        where dw_seq = #{dw_seq}
+    </update>
 </mapper>

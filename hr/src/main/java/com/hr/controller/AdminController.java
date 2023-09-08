@@ -6,6 +6,7 @@ import com.hr.domain.DesignWaitingListMember;
 import com.hr.domain.Member;
 import com.hr.service.DWLService;
 import com.hr.service.MemberService;
+import com.hr.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,16 @@ import java.util.List;
 public class AdminController {
     final MemberService memberService;
     final DWLService dwlService;
+    final ProjectService projectService;
 
     @Autowired
-    public AdminController(MemberService memberService, DWLService dwlService) {
+    public AdminController(MemberService memberService, DWLService dwlService, ProjectService projectService) {
         this.memberService = memberService;
         this.dwlService = dwlService;
+        this.projectService = projectService;
     }
 
+    //date format binder
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,6 +41,8 @@ public class AdminController {
         binder.registerCustomEditor(Date.class, new CustomDateConverter(dateFormat));
     }
 
+
+    //member admin 페이지 시작 -------------------------------------------------------------
     //사원 명단 추가 page GET
     @GetMapping("/addMember")
     public String addMemberGET(Model model) {
@@ -103,6 +109,10 @@ public class AdminController {
         memberService.updateMember(member);
         return "redirect:/admin/member";
     }
+    //member admin 페이지 끝-------------------------------------------------------------
+
+
+    //DWL admin 페이지 시작----------------------------------------------------------------
 
     //DWL 추가 페이지 GET
     @GetMapping("/addDwl")
@@ -132,7 +142,7 @@ public class AdminController {
 
     //DWL 수정 / 삭제 페이지
     @GetMapping("/designWaitingList")
-    public String editDwlGET(Model model){
+    public String editDwlGET(Model model) {
         log.info("editDwl GET 실행");
         //design waiting list
         model.addAttribute("dwl", dwlService.getAllDWL());
@@ -145,19 +155,77 @@ public class AdminController {
 
     //DWL 삭제 페이지
     @GetMapping("/deleteDw")
-    public String deleteDwGET(@RequestParam int dw_seq){
+    public String deleteDwGET(@RequestParam int dw_seq) {
         log.info("deleteDw GET 실행");
         dwlService.deleteDWL(dw_seq);
         return "redirect:/admin/designWaitingList";
     }
 
+    //DWL 리스트 페이지
     @GetMapping("/editDw")
-    public String editDwGET(Model model, @RequestParam int dw_seq){
+    public String editDwGET(Model model, @RequestParam int dw_seq) {
         log.info("editDw GET 실행");
         model.addAttribute("dw", dwlService.findDWLBySeq(dw_seq));
         model.addAttribute("dwms", dwlService.findDWLMBySeq(dw_seq));
         model.addAttribute("memberList", memberService.getMemberList());
         return "admin/dwl/editDw";
     }
+
+    //DWL 편집 POST
+    @PostMapping("/editDwl.do")
+    public String editDwlPOST(DesignWaitingList dwl, @RequestParam List<Integer> m_num
+    ) {
+        log.info("editDwl POST 실행");
+        log.info("dwl = " + dwl);
+        log.info("member = " + m_num);
+
+        dwlService.editDWL(dwl);
+        dwlService.deleteDWLMBySeq(dwl.getDw_seq());
+        for (int i : m_num) {
+            DesignWaitingListMember dwlm = new DesignWaitingListMember(dwl.getDw_seq(), i);
+            dwlService.addDWLM(dwlm);
+        }
+        return "redirect:/designWaitingList";
+    }
+    //DWL admin 페이지 끝 -----------------------------------------------------------------------
+
+    //Project admin 페이지 시작    --------------------------------------------------------------
+    @GetMapping("/editProjectList")
+    public String editProjectListGET(Model model) {
+        log.info("editProjectList GET 실행");
+        model.addAttribute("projectList", projectService.findAllProjects());
+        model.addAttribute("projectMemberList", projectService.findAllProjectMembers());
+        return "/admin/project/editProjectList";
+    }
+
+    //project add get
+    @GetMapping("/addProject")
+    public String addProjectGET(Model model) {
+        log.info("addProject GET 실행");
+        return "/admin/project/addProject";
+    }
+
+    //project add post
+    @PostMapping("/addProject.do")
+    public String addProjectPOST() {
+        log.info("addProject POST 실행");
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/editProject")
+    public String editProjectGET(Model model) {
+        log.info("editProject GET 실행");
+        return "/admin/project/editProject";
+    }
+
+    @PostMapping("/editProject.do")
+    public String editProjectPOST(){
+        log.info("editProject POST 실행");
+        return "redirect: /";
+    }
+    //Project admin 페이지 끝    ----------------------------------------------------------------
 }
+
+
 

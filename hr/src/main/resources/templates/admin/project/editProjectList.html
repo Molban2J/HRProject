@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="container-fluid px-4">
+
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header" style="font-size: large; font-weight: 550; display: flex; align-items: center;">
+            <i class="fas fa-table me-1"></i>
+            Project List
+        </div>
+        <div class="card-body">
+            <table id="datatablesProject">
+                <thead>
+                <tr>
+                    <th>시작 날짜</th>
+                    <th>프로젝트 명</th>
+                    <th>책임자</th>
+                    <th>참여자</th>
+                    <th>수정 / 삭제</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>시작 날짜</th>
+                    <th>프로젝트 명</th>
+                    <th>책임자</th>
+                    <th>참여자</th>
+                    <th>수정 / 삭제</th>
+                </tr>
+                </tfoot>
+                <tbody>
+
+                <tr th:each="project:${projectList}">
+                    <td style="width:10%;" th:text="${#dates.format(project.start_date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${project.proj_name}"></td>
+                        <td>
+                            <th:block th:each="member:${projectMemberList}">
+                            <th:block th:if="${project.proj_name == member.proj_name && member.importance ==100}" th:text="${member.name}"></th:block>
+                            </th:block>
+                            <input type="hidden" name="proj_name" th:value="${project.proj_name}">
+                        </td>
+                    <td>
+                        <th:block th:each="member:${projectMemberList}" th:if="${project.proj_name == member.proj_name}">
+                            <th:block th:unless="${member.importance == 100}" th:text="${member.name}"></th:block>
+                        </th:block>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-success pl_edit_button">수정</button>
+                        <button class="btn btn-outline-danger pl_delete_button">삭제</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script src="/js/projectListTable.js"></script>
+</div>
+</html>

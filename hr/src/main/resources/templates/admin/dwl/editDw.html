@@ -7,6 +7,7 @@
 
 <!-- content fragment 사용 -->
 <div layout:fragment="content" class="container-fluid px-4">
+
     <h1 class="mt-4">뉴미디어사업본부</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active"></li>
@@ -20,7 +21,8 @@
                         <div class="card-header"><h3 class="text-center font-weight-light my-4">Design Waiting List
                             추가</h3></div>
                         <div class="card-body">
-                            <form name="frm" id="dwl_add_form" method="post" action="/admin/editDwl.do">
+                            <form name="frm" id="dwl_edit_form" method="post" action="/admin/editDwl.do">
+                                <input type="hidden" name="dw_seq" th:value="${dw.dw_seq}">
                                 <div class="form-floating mb-3">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
@@ -42,14 +44,16 @@
                                     <p>멤버</p>
                                     <input type="hidden" id="memberCount" name="memberCount" th:value="${dwms.size()}">
                                     <div class="mb-md-3 selectDiv" style="display: flex; align-items: center;" th:each="dwm:${dwms}">
-                                        <select class="form-select mb-md-3 member1" style="width: 35%; margin-right:1rem;"
+                                        <select th:id="'selectMem'+${dwms.indexOf(dwm)}" class="form-select mb-md-3 member1" style="width: 35%; margin-right:1rem;"
                                                 name="m_num">
                                             <option th:each="member:${memberList}"
                                                     th:value="${member.m_num}"
                                                     th:text="${member.name}"
                                                     th:selected="${member.m_num == dwm.get('m_num')}"></option>
                                         </select>
-                                        <a id="memberRemove" class=" mb-md-3 btn btn-light btn-outline-dark">-</a>
+                                        <th:block th:if="${dwms.indexOf(dwm)>0}">
+                                            <a class=" mb-md-3 btn btn-light btn-outline-dark memberRemove">-</a>
+                                        </th:block>
                                     </div>
                                 </div>
                                 <div>
@@ -83,7 +87,7 @@
                                 </div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-grid">
-                                        <button class="btn btn-primary btn-block dwl_add_button">수정</button>
+                                        <button class="btn btn-primary btn-block dwl_edit_submit_button">수정</button>
                                     </div>
                                 </div>
                             </form>

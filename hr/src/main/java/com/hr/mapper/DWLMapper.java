@@ -24,5 +24,8 @@ public interface DWLMapper {
     void addDWLM(DesignWaitingListMember dwlm); //DesignWaitingList Member 추가
 
     void deleteDWL(int dw_seq); //Design Waiting List 삭제 by dw_seq
-    
+
+    void updateDWL(DesignWaitingList designWaitingList);
+
+    void deleteDWLMBySeq(int dw_seq);
 }

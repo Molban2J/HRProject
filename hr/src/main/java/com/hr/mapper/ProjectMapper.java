@@ -14,7 +14,7 @@ public interface ProjectMapper {
     Project findProjectByProjName();    //프로젝트명으로 프로젝트 찾기
     void addProject(Project project);   // 프로젝트 추가
 
-    List<ProjectMember> findAllProjectMembers();
+    List<Map<String, Object>> findAllProjectMembers();
 
     List<Map<String,Object>> findProjectLeader();
 

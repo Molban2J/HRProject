@@ -68,4 +68,14 @@ public class DWLServiceImpl implements DWLService{
     public DesignWaitingList findDWLBySeq(int dw_seq) {
         return dwlMapper.findDWLBySeq(dw_seq);
     }
+
+    @Override
+    public void editDWL(DesignWaitingList designWaitingList) {
+        dwlMapper.updateDWL(designWaitingList);
+    }
+
+    @Override
+    public void deleteDWLMBySeq(int dw_seq) {
+        dwlMapper.deleteDWLMBySeq(dw_seq);
+    }
 }

@@ -16,8 +16,16 @@
         values (#{proj_name}, #{start_date})
     </insert>
 
-    <select id="findAllProjectMembers" resultType="com.hr.domain.ProjectMember">
-        select * from ProjectMember order by importance asc
+    <select id="findAllProjectMembers" resultType="java.util.Map">
+        select
+            pm.importance,
+            pm.proj_name,
+            m.name
+        from
+            ProjectMember pm
+                LEFT JOIN
+            Member m ON pm.m_num = m.m_num
+        order by importance asc
     </select>
 
     <select id="findProjectLeader" resultType="java.util.Map">

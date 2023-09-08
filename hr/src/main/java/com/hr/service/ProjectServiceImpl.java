@@ -29,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectMember> findAllProjectMembers() {
+    public List<Map<String, Object>> findAllProjectMembers() {
         return projectMapper.findAllProjectMembers();
     }
 
