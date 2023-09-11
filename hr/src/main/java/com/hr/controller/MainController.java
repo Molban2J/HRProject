@@ -109,7 +109,7 @@ public class MainController {
         log.info("designWaitingList GET 접속");
         //design waiting list
         model.addAttribute("dwl", dwlService.getAllDWL());
-        log.info("designWaitingList = "+ dwlService.getAllDWL());
+        //log.info("designWaitingList = "+ dwlService.getAllDWL());
         //design waiting list + 각 프로젝트 참여 멤버 리스트
         model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
         return "/designWaitingList";

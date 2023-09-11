@@ -45,6 +45,7 @@
                             <th:block th:if="${project.proj_name == member.proj_name && member.importance ==100}" th:text="${member.name}"></th:block>
                             </th:block>
                             <input type="hidden" name="proj_name" th:value="${project.proj_name}">
+                            <input type="hidden" name="proj_id" th:value="${project.proj_id}">
                         </td>
                     <td>
                         <th:block th:each="member:${projectMemberList}" th:if="${project.proj_name == member.proj_name}">

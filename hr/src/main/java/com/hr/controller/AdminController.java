@@ -1,9 +1,7 @@
 package com.hr.controller;
 
 import com.hr.CustomDateConverter;
-import com.hr.domain.DesignWaitingList;
-import com.hr.domain.DesignWaitingListMember;
-import com.hr.domain.Member;
+import com.hr.domain.*;
 import com.hr.service.DWLService;
 import com.hr.service.MemberService;
 import com.hr.service.ProjectService;
@@ -14,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -192,7 +191,7 @@ public class AdminController {
     //Project admin 페이지 시작    --------------------------------------------------------------
     @GetMapping("/editProjectList")
     public String editProjectListGET(Model model) {
-        log.info("editProjectList GET 실행");
+        log.info("admin editProjectList GET 실행");
         model.addAttribute("projectList", projectService.findAllProjects());
         model.addAttribute("projectMemberList", projectService.findAllProjectMembers());
         return "/admin/project/editProjectList";
@@ -201,28 +200,70 @@ public class AdminController {
     //project add get
     @GetMapping("/addProject")
     public String addProjectGET(Model model) {
-        log.info("addProject GET 실행");
+        log.info("admin addProject GET 실행");
+        model.addAttribute("memberList", memberService.getMemberList());
         return "/admin/project/addProject";
     }
 
     //project add post
     @PostMapping("/addProject.do")
-    public String addProjectPOST() {
-        log.info("addProject POST 실행");
+    public String addProjectPOST(@RequestParam List<Integer> importance, @RequestParam List<Integer> m_num, Project project) {
+        log.info("admin addProject POST 실행");
+//        log.info("project = "+project);
+//        log.info("importance list = "+importance);
+//        log.info("name list = "+m_num);
+        int a = projectService.addProject(project);
+//        log.info("success = "+a);
+        int proj_id = projectService.findProjectByProjName(project.getProj_name()).getProj_id();
+        for (int i = 0; i<m_num.size(); i++){
+            ProjectMember projectMember = new ProjectMember(proj_id, m_num.get(i), importance.get(i));
+            projectService.addProjectMember(projectMember);
+        }
         return "redirect:/";
     }
 
 
     @GetMapping("/editProject")
-    public String editProjectGET(Model model) {
-        log.info("editProject GET 실행");
+    public String editProjectGET(Model model, @RequestParam int proj_id) {
+        log.info("admin editProject GET 실행");
+        log.info("proj_name = "+proj_id);
+        model.addAttribute("project", projectService.findProjectByProjId(proj_id));
+        //log.info("project info = "+ projectService.findProjectByProjName(proj_name));
+        model.addAttribute("projMemberList", projectService.findProjMemberByProjId(proj_id));
+        model.addAttribute("memberList", memberService.getMemberList());
         return "/admin/project/editProject";
     }
 
     @PostMapping("/editProject.do")
-    public String editProjectPOST(){
-        log.info("editProject POST 실행");
-        return "redirect: /";
+    public String editProjectPOST(@RequestParam List<Integer> importance, @RequestParam List<Integer> m_num, Project project){
+        log.info("admin editProject POST 실행");
+        log.info("end_date = "+project.getEnd_date());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date futureDate = null;
+
+        try {
+            futureDate = dateFormat.parse("9998-01-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+            if (project.getEnd_date().after(futureDate)){
+                project.setEnd_date(null);
+            }
+        projectService.updateProject(project);
+            projectService.deleteProjectMember(project.getProj_id());
+            for(int i = 0; i<m_num.size(); i++){
+                ProjectMember projectMember = new ProjectMember(project.getProj_id(), m_num.get(i), importance.get(i));
+                projectService.addProjectMember(projectMember);
+            }
+        return "redirect:/admin/editProjectList";
+    }
+
+    @GetMapping("/deleteProject")
+    public String deleteProjectGET(@RequestParam int proj_id){
+        log.info("admin deleteProject GET 실행");
+        log.info("proj_name = "+proj_id+" 삭제");
+        projectService.deleteProject(proj_id);
+        return "redirect:/admin/editProjectList";
     }
     //Project admin 페이지 끝    ----------------------------------------------------------------
 }

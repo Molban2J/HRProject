@@ -6,18 +6,29 @@ import com.hr.domain.ProjectMember;
 import java.util.List;
 import java.util.Map;
 
-public interface ProjectService {
-    public List<Project> findAllProjects();
+ public interface ProjectService {
+     List<Project> findAllProjects();
 
-    public Project findProjectByProjName(String projName);
+     Project findProjectByProjName(String proj_name);
 
-    public void addProject(Project project);
+     int addProject(Project project);
 
-    public List<Map<String, Object>> findAllProjectMembers();
+     List<Map<String, Object>> findAllProjectMembers();
 
-    public List<Map<String, Object>> findProjectLeader();
+     List<Map<String, Object>> findProjectLeader();
 
-    public List<Map<String, Object>> findMembersEachProj();
+     List<Map<String, Object>> findMembersEachProj();
 
-    public void addProjectMember(ProjectMember projectMember);
-}
+     void addProjectMember(ProjectMember projectMember);
+    
+    void deleteProject(int proj_id);
+
+    List<Map<String, Object>> findProjMemberByProjId(int proj_id);
+
+    Project findProjectByProjId(int proj_id);
+
+    void updateProject(Project project);
+
+    void deleteProjectMember(int proj_id);
+
+ }

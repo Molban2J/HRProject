@@ -8,40 +8,47 @@
     </select>
 
     <select id="findProjectByProjName" resultType="com.hr.domain.Project">
-        select * from Projec where proj_name = #{proj_name}
+        select * from Project where proj_name = #{proj_name}
+    </select>
+
+    <select id="findProjectByProjId" resultType="com.hr.domain.Project">
+        select * from Project where proj_id = #{proj_id}
     </select>
     
     <insert id="addProject">
-        insert into Project (proj_name, start_date)
-        values (#{proj_name}, #{start_date})
+        insert into Project (proj_name, start_date,end_date)
+        values (#{proj_name}, #{start_date},#{end_date})
     </insert>
 
     <select id="findAllProjectMembers" resultType="java.util.Map">
         select
             pm.importance,
-            pm.proj_name,
+            p.proj_name,
             m.name
         from
             ProjectMember pm
                 LEFT JOIN
             Member m ON pm.m_num = m.m_num
+                LEFT JOIN
+            Project p ON pm.proj_id = p.proj_id
         order by importance asc
     </select>
 
     <select id="findProjectLeader" resultType="java.util.Map">
         SELECT
-            p.proj_name,
+            p.proj_id,
             CASE WHEN pm.importance = 100 THEN m.name ELSE "" END AS name
         FROM
             Project p
                 LEFT JOIN
-            ProjectMember pm ON p.proj_name = pm.proj_name AND pm.importance = 100
+            ProjectMember pm ON p.proj_id = pm.proj_id AND pm.importance = 100
                 LEFT JOIN
             Member m ON pm.m_num = m.m_num
     </select>
 
     <select id="findMembersEachProj" resultType="java.util.Map">
         SELECT
+            p.proj_id,
             p.start_date,
             p.proj_name,
             m.name,
@@ -49,7 +56,7 @@
         FROM
             Project p
                 JOIN
-            ProjectMember pm ON p.proj_name = pm.proj_name
+            ProjectMember pm ON p.proj_id = pm.proj_id
                 JOIN
             Member m ON pm.m_num = m.m_num
         ORDER BY
@@ -57,7 +64,35 @@
     </select>
 
     <insert id="addProjectMember">
-        insert into ProjectMember (proj_name,m_num,importance)
-        values (#{proj_name},#{m_name},#{importance})
+        insert into ProjectMember (proj_id,m_num,importance)
+        values (#{proj_id},#{m_num},#{importance})
     </insert>
+
+    <delete id="deleteProject">
+        delete from Project
+        where proj_id = #{proj_id}
+    </delete>
+
+    <select id="findProjMemberByProjId" resultType="java.util.Map">
+        select
+            m.name,
+            pm.m_num,
+            p.proj_name
+        from ProjectMember pm
+        LEFT JOIN Member m ON m.m_num = pm.m_num
+        LEFT JOIN Project p ON p.proj_id = pm.proj_id
+        where pm.proj_id = #{proj_id}
+    </select>
+
+    <update id="updateProject">
+        update Project
+        set proj_name = #{proj_name}, start_date = #{start_date}, end_date=#{end_date}
+        where proj_id = #{proj_id}
+    </update>
+
+    <delete id="deleteProjectMember">
+        delete from ProjectMember
+        where proj_id = #{proj_id}
+
+    </delete>
 </mapper>

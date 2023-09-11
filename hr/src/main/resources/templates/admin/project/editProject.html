@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+>
+
+<!-- content fragment 사용 -->
+<div layout:fragment="content" class="container-fluid px-4" >
+    <h1 class="mt-4">뉴미디어사업본부</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 mb-md-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Project 추가</h3></div>
+                        <div class="card-body">
+                            <form name="frm" id="proj_edit_form" method="post" action="/admin/editProject.do">
+                                <input type="hidden" name="proj_id" th:value="${project.proj_id}">
+                                <div class="form-floating mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="proj_name" th:value="${project.proj_name}" name="proj_name" type="text" placeholder="프로젝트 명" required/>
+                                            <label for="proj_name">프로젝트 명</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="selectContainer">
+                                    <div class="row"  th:each="projMember : ${projMemberList}">
+                                        <input type="hidden" id="memberCount" name="memberCount" value="1">
+                                        <div class="col-xl-6">
+                                            <p th:if="${projMemberList.indexOf(projMember)==0}">멤버</p>
+                                            <div style="display: flex; align-items: center">
+                                            <label for="member1"></label>
+                                            <select class="form-select mb-md-3 member1" style="width: 70%" id="member1" name="m_num">
+                                                <option>멤버를 선택해주세요</option>
+                                                <option th:each="member:${memberList}"
+                                                        th:value="${member.m_num}"
+                                                        th:text="${member.name}"
+                                                th:selected="${member.m_num == projMember.get('m_num')}"></option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6" id="position" style="width: 50%;">
+                                            <p th:if="${projMemberList.indexOf(projMember)==0}">Position</p>
+                                            <div style="display: flex; align-items: center">
+                                            <label for="importance"></label>
+                                            <select class="form-select mb-md-3 member1" style="width: 70%; margin-right:1rem;" id="importance" name="importance">
+                                                <option value="0" th:selected="${projMember.get('importance') == 0}">STAFF</option>
+                                                <option value="50" th:selected="${projMember.get('importance') == 50}">DPM</option>
+                                                <option value="100" th:selected="${projMember.get('importance') == 100}">PM</option>
+                                            </select>
+                                            <th:block th:if="${projMemberList.indexOf(projMember)>0}">
+                                                <a class=" mb-md-3 btn btn-light btn-outline-dark projMemberRemove">-</a>
+                                            </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
+                                </div>
+                                <hr>
+                                <div class="col-md-6 mb-3 mb-md-2">
+                                    <label class="mb-3 mb-md-2" for="start_date">시작일</label>
+                                    <input class="form-control" type="date" th:value="${#dates.format(project.start_date, 'yyyy-MM-dd')}" id="start_date" name="start_date"/>
+                                </div>
+                                <div class="col-md-6 mb-30 mb-md-4">
+                                    <label class="mb-md-2" for="end_date">마감일</label>
+                                    <input type="date" id="end_date" class="form-control"  th:value="${#dates.format(project.end_date, 'yyyy-MM-dd')}" name="end_date">
+                                </div>
+                                <hr>
+
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button class="btn btn-primary btn-block proj_edit_button">수정</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/projectListTable.js"></script>
+</div>
+
+</html>

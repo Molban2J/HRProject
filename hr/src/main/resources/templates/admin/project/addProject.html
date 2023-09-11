@@ -29,36 +29,30 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row" id="selectContainer">
-
+                                <div id="selectContainer">
+                                <div class="row">
                                     <input type="hidden" id="memberCount" name="memberCount" value="1">
                                     <div class="col-xl-6">
                                         <p>멤버</p>
                                     <label for="member1"></label>
-                                    <select class="form-select mb-md-3 member1" style="width: 35%" id="member1" name="m_num">
+                                    <select class="form-select mb-md-3 member1" style="width: 70%" id="member1" name="m_num">
                                         <option>멤버를 선택해주세요</option>
                                         <option th:each="member:${memberList}"
                                                 th:value="${member.m_num}"
                                                 th:text="${member.name}"></option>
                                     </select>
                                     </div>
-                                    <div class="col-xl-6 slidecontainer" style="width: 50%">
-                                        <p>중요도</p>
-                                        <label for="progress"></label>
-                                        <p><span id="progressval"></span>%</p>
-                                        <input class="slider" id="progress" step="20" value="0" type="range" name="importance" min="0" max="100" list="progressvalue">
-                                        <datalist id="progressvalue">
-                                            <option>0</option>
-                                            <option>20</option>
-                                            <option>40</option>
-                                            <option>60</option>
-                                            <option>80</option>
-                                            <option>100</option>
-                                        </datalist>
-
+                                    <div class="col-xl-6" id="position" style="width: 50%;">
+                                        <p>Position</p>
+                                        <label for="importance"></label>
+                                        <select class="form-select mb-md-3 member1" style="width: 70%" id="importance" name="importance">
+                                            <option value="0" selected>STAFF</option>
+                                            <option value="50">DPM</option>
+                                            <option value="100">PM</option>
+                                        </select>
                                     </div>
                                 </div>
-
+                                </div>
                                 <div>
                                     <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
                                 </div>
@@ -69,7 +63,7 @@
                                 </div>
                                 <div class="col-md-6 mb-30 mb-md-4">
                                     <label class="mb-md-2" for="end_date">마감일</label>
-                                    <input type="date" id="end_date" class="form-control" name="end_date" placeholder="마감일을 입력하시면 완료 프로젝트로 분류됩니다.">
+                                    <input type="date" id="end_date" class="form-control" name="end_date"/>
                                 </div>
                                 <hr>
 
@@ -83,6 +77,8 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/projectListTable.js"></script>
 </div>
 
 </html>

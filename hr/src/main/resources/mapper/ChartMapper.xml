@@ -8,7 +8,7 @@
         SELECT m.name as label, GROUP_CONCAT(lc.importance ORDER BY lc.chart_date SEPARATOR ',') AS data
         FROM LineChart lc
                  JOIN Member m ON lc.m_num = m.m_num
-        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 14 DAY) AND #{date}
+        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 30 DAY) AND #{date}
         GROUP BY lc.m_num;
     </select>
 
@@ -16,7 +16,7 @@
 
         SELECT distinct chart_date
         FROM LineChart lc
-        where lc.chart_date between DATE_SUB(#{date},INTERVAL 14 day) and #{date}
+        where lc.chart_date between DATE_SUB(#{date},INTERVAL 30 day) and #{date}
         ORDER BY chart_date
     </select>
 
@@ -24,7 +24,7 @@
         SELECT m.name as label, lc.importance as data
         FROM Member m
         LEFT JOIN LineChart lc ON lc.m_num = m.m_num
-        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 14 DAY) AND #{date}
+        WHERE lc.chart_date BETWEEN DATE_SUB(#{date}, INTERVAL 30 DAY) AND #{date}
         ORDER BY lc.chart_date;
     </select>
 

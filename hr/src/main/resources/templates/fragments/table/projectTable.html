@@ -6,7 +6,7 @@
     <div class="card-header" style="font-size: large; font-weight: 550; display: flex; align-items: center;">
         <i class="fas fa-table me-1"></i>
         뉴미디어사업본부 프로젝트 명단
-        <a class="btn btn-outline-success" style="font-size: 0.8rem; margin-left: auto;" href="#">수정
+        <a class="btn btn-outline-success" style="font-size: 0.8rem; margin-left: auto;" href="/admin/editProjectList">수정
         </a>
     </div>
     <div class="card-body">
@@ -33,11 +33,11 @@
                 <td style="width:10%;" th:text="${#dates.format(project.start_date, 'yyyy-MM-dd')}"></td>
                 <td th:text="${project.proj_name}"></td>
                 <th:block th:each="leader:${projectLeader}">
-                    <td th:if="${leader.proj_name == project.proj_name}" th:text="${leader.name}"></td>
+                    <td th:if="${leader.proj_id == project.proj_id}" th:text="${leader.name}"></td>
                 </th:block>
 
                     <td>
-                        <th:block th:each="member:${memberEachProject}" th:if="${project.proj_name == member.proj_name}">
+                        <th:block th:each="member:${memberEachProject}" th:if="${project.proj_id== member.proj_id}">
                             <th:block th:unless="${member.importance == 100}" th:text="${member.name}"></th:block>
                         </th:block>
                     </td>
