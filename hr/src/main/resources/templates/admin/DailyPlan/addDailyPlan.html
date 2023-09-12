@@ -6,7 +6,7 @@
 >
 
 <!-- content fragment 사용 -->
-<div layout:fragment="content" class="container-fluid px-4" >
+<div layout:fragment="content" class="container-fluid px-4">
     <h1 class="mt-4">뉴미디어사업본부</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active"></li>
@@ -17,61 +17,37 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7 mb-md-5">
                     <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Daily Plan 추가</h3></div>
-                        <div class="p-3" >
-                        <div class="card-body shadow rounded-1 mt-3" >
-                            <form>
-                            <div class="mb-30 mb-md-3">
-                                <label class="mb-md-2" for="description">Description</label>
-                                <input class="form-control md" id="description" name="description"  type="text"/>
-                            </div>
-                            </form>
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Daily Plan 추가</h3>
                         </div>
-                        <div class="card-body shadow mt-4">
-                            <form name="frm" id="dwl_add_form" method="post" action="/admin/addDailyPlan.do">
-                                <div class="col-md-6 mb-30 mb-md-4">
-                                    <label class="mb-md-2" for="time">시간</label>
-                                    <input class="form-control md" id="time" name="time"  type="datetime-local" required/>
-                                </div>
-                                <hr>
-                                <div class="form-floating mb-3">
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="plan_name" name="plan_name" type="text" placeholder="프로젝트 명" required/>
-                                            <label for="plan_name">일정명</label>
-                                        </div>
+                        <div class="card-body shadow rounded-1 mt-3">
+                            <div class="p-3">
+                                <form>
+                                    <div class="mb-30 mb-md-3">
+                                        <label class="mb-md-2" for="description">공지</label>
+                                        <!--                                <input class="form-control md" id="description" name="description"  type="text"/>-->
+                                        <textarea class="form-control" id="description" name="description" rows="3"
+                                                  style="overflow: visible; resize: none"></textarea>
                                     </div>
+                                </form>
+                            </div>
+                            <div id="addForm" th:insert="fragments/addDailyPlanForm :: addDailyPlanForm"></div>
+                            <div class="card-body mb-0">
+                                <div class="d-grid">
+                                    <button class="btn btn-secondary btn-block plan_add_button">+</button>
                                 </div>
-                                <hr>
-                                <div class="col-md-6" id="selectContainer">
-                                    <p>멤버</p>
-                                    <input type="hidden" id="memberCount" name="memberCount" value="1">
-                                    <label for="member1"></label>
-                                    <select class="form-select mb-md-3 member1" style="width: 35%" id="member1" name="m_num">
-                                        <option th:each="member:${memberList}"
-                                                th:value="${member.m_num}"
-                                                th:text="${member.name}"></option>
-                                    </select>
+                            </div>
+                            <div class="card-body mt-4 mb-2">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-block dp_add_button">일정 등록</button>
                                 </div>
-                                <div>
-                                    <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                        <div class="card-body mb-0">
-                            <div class="d-grid"><button class="btn btn-secondary btn-block plan_add_button">+</button></div>
-                        </div>
-                        <div class="card-body mt-4 mb-2">
-                            <div class="d-grid"><button class="btn btn-primary btn-block dp_add_button">일정 등록</button></div>
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
+        <script src="/js/dailyPlan.js"></script>
     </div>
-    <script src="/js/designWaitingList.js"></script>
 </div>
-
 </html>

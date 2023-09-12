@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<!--addDailyPlanForm 선언-->
+<div th:fragment="addDailyPlanForm">
+    <form class="card-body shadow mt-4" name="frm" id="plan_add_form" method="post"
+          action="/admin/addDailyPlan.do">
+        <div class="col-md-6 mb-30 mb-md-4">
+            <label class="mb-md-2" for="time">시간</label>
+            <input class="form-control md" id="time" name="time"
+                   th:value="${#dates.format(now, 'yyyy-MM-dd HH:mm')}" type="datetime-local"
+                   required/>
+        </div>
+        <hr>
+        <div class="form-floating mb-3">
+            <div class="col-md-6">
+                <div class="form-floating mb-3 mb-md-0">
+                    <input class="form-control" id="plan_name" name="plan_name"
+                           placeholder="일정 명" type="text" required/>
+                    <label for="plan_name">일정 명</label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <input type="hidden" id="memberCount" name="memberCount" value="1">
+        <div class="col-md-6" id="selectContainer">
+            <p>멤버</p>
+            <label for="member1"></label>
+            <select class="form-select mb-md-3 member1" style="width: 35%" id="member1"
+                    name="m_num">
+                <option th:each="member:${memberList}"
+                        th:value="${member.m_num}"
+                        th:text="${member.name}"></option>
+            </select>
+        </div>
+        <div>
+            <a class="btn btn-light btn-outline-dark" id="memberAdd">+</a>
+        </div>
+    </form>
+
+</div>
