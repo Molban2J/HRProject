@@ -77,7 +77,8 @@
         select
             m.name,
             pm.m_num,
-            p.proj_name
+            p.proj_name,
+            pm.importance
         from ProjectMember pm
         LEFT JOIN Member m ON m.m_num = pm.m_num
         LEFT JOIN Project p ON p.proj_id = pm.proj_id

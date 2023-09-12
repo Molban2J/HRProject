@@ -51,8 +51,8 @@
                                             <div style="display: flex; align-items: center">
                                             <label for="importance"></label>
                                             <select class="form-select mb-md-3 member1" style="width: 70%; margin-right:1rem;" id="importance" name="importance">
-                                                <option value="0" th:selected="${projMember.get('importance') == 0}">STAFF</option>
-                                                <option value="50" th:selected="${projMember.get('importance') == 50}">DPM</option>
+                                                <option value="50" th:selected="${projMember.get('importance') == 50}">STAFF</option>
+                                                <option value="80" th:selected="${projMember.get('importance') == 80}">DPM</option>
                                                 <option value="100" th:selected="${projMember.get('importance') == 100}">PM</option>
                                             </select>
                                             <th:block th:if="${projMemberList.indexOf(projMember)>0}">

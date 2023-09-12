@@ -92,6 +92,13 @@ $(document).ready(
             counter--;
         });
 
+        $('.proj_add_button').click(function(){
+            var endDateInput = document.getElementById("end_date");
+            if (endDateInput.value === "") {
+                endDateInput.value = '9998-12-31';
+            }
+        })
+
         $('.proj_edit_button').click(function(){
             var endDateInput = document.getElementById("end_date");
             if (endDateInput.value === "") {
@@ -100,26 +107,4 @@ $(document).ready(
         })
 
 
-        // $(".proj_submit_button").click(function() {
-        //     const selectContainer = $('#selectContainer');
-        //
-        //     const data = [];
-        //     const proj_name = $('#proj_name').val();
-        //     const start_date = $('#start_date').val();
-        //     const end_date = $('#end_Date').val();
-        //     const member = [];
-        //     selectContainer.find("div").each(function() {
-        //         selectContainer.find($('#m_num'))
-        //     });
-        //     $.ajax({
-        //         url: '/admin/addProject.do',
-        //         type: 'POST',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify(data),
-        //         success: function(response) {
-        //             // 성공적으로 응답을 받았을 때 처리할 로직
-        //             console.log(response);
-        //         },
-        //     });
-        // });
     });

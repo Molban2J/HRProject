@@ -43,7 +43,7 @@
 
     <update id="updateMember" parameterType="com.hr.domain.Member">
         update Member
-        set name = #{name}, department=#{department}, position1 = #{position1}, position2=#{position2}, job_field=#{job_field}
+        set name = #{name}, department=#{department}, position1 = #{position1}, position2=#{position2}, job_field=#{job_field}, status = #{status}
         where m_num = #{m_num}
     </update>
 </mapper>
