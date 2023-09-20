@@ -1,0 +1,229 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+body{
+    margin: 0;
+    background: url("../assets/img/background.png");
+    background-size: cover;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+}
+
+@property --gradX {
+    syntax: '<percentage>';
+    initial-value: 50%;
+    inherits: true;
+}
+
+@property --gradY {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: true;
+}
+
+:root {
+    --d: 2500ms;
+    --angle: 90deg;
+    --gradX: 100%;
+    --gradY: 50%;
+    --c1: rgba(168, 239, 255, 1);
+    --c2: rgba(168, 239, 255, 0.1);
+}
+
+
+#wrapper{
+    width: 100%;
+    height: calc(100vh);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+/*content 설정*/
+.content{
+    flex-wrap: wrap;
+    width: calc(90vw);
+    height: calc(90vh);
+    background: rgba( 255, 255, 255, 0.3 );
+    box-shadow: 0 8px 32px 0 rgba(6, 8, 35, 0.37);
+    backdrop-filter: blur( 15px );
+    -webkit-backdrop-filter: blur( 5px );
+    border: 0.15rem solid;
+    border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+    animation: borderRotate var(--d) linear infinite forwards;
+}
+/*content border animation 설정*/
+.content:nth-child(2) {
+    border-image: radial-gradient(ellipse at var(--gradX) var(--gradY), var(--c1), var(--c1) 10%, var(--c2) 40%) 30;
+    animation: borderRadial var(--d) linear infinite forwards;
+}
+
+@keyframes borderRotate {
+    100% {
+        --angle: 420deg;
+    }
+}
+
+@keyframes borderRadial {
+    20% {
+        --gradX: 100%;
+        --gradY: 50%;
+    }
+    40% {
+        --gradX: 100%;
+        --gradY: 100%;
+    }
+    60% {
+        --gradX: 50%;
+        --gradY: 100%;
+    }
+    80% {
+        --gradX: 0%;
+        --gradY: 50%;
+    }
+    100% {
+        --gradX: 50%;
+        --gradY: 0%;
+    }
+}
+
+/*content border animation 설정 끝*/
+
+.newBornLabLogo{
+    width: 5%;
+    margin: 1rem;
+    margin-bottom: 0;
+}
+
+.project{
+    width: 100%;
+    margin: 0 auto;
+
+}
+.projectTable{
+    position: absolute;
+    top: 5%;
+    margin: 0 5%;
+    width: 90%;
+    height: 90%;
+    font-size: 1.5rem;
+    text-align: center;
+    border-collapse: collapse;
+    border: none;
+
+}
+
+.projectTable th{
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 250;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.projectTable th .projectMember{
+    margin: 0 2rem;
+}
+
+.projectTable .category{
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0 2rem;
+}
+
+.projectTable td{
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 200;
+}
+
+
+.projectTable .period{
+    font-weight: 200;
+    padding: 0 2rem;
+}
+
+
+.pm > .projectMember{
+    margin: 0 auto;
+}
+
+.dpm > .projectMember{
+    margin: 0 auto;
+}
+
+.projectMember{
+    width: 5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.projectImg{
+    width: 6.5rem;
+}
+
+
+.member-td{
+    width: 35%;
+}
+.member-col{
+    clear: both;
+    padding: 0 2rem;
+    display: flex;
+    width: 100%;
+
+}
+.member-col > .projectMember{
+    margin: 0 2rem;
+}
+
+.projectTable img{
+    width: 100%;
+    margin: 0;
+}
+
+
+.projectName {
+    text-align: justify-all;
+    padding: 0 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.projectName-td{
+    width:10%;
+    padding: 0;
+}
+
+.border-top{
+    border-top: solid rgba(255, 255, 255, 0.7) 2px;
+}
+
+.border-bottom{
+    border-bottom: solid rgba(255, 255, 255, 0.7) 2px;
+}
+
+.border-right{
+    border-right: solid rgba(255, 255, 255, 0.7) 2px;
+}
+
+.border-left{
+    border-left: solid rgba(255, 255, 255, 0.7) 2px;
+}
+
+.period{
+
+    width:8%;
+}
+.budget{
+    width:8%;
+    text-align: center;
+}
+.desc{
+    width:8%;
+}
+
+

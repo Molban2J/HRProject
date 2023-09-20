@@ -17,17 +17,18 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7 mb-md-5">
                     <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Project 추가</h3></div>
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Project 수정</h3></div>
                         <div class="card-body">
                             <form name="frm" id="proj_edit_form" method="post" action="/admin/editProject.do">
-                                <input type="hidden" name="proj_id" th:value="${project.proj_id}">
+                                <input type="hidden" id="proj_id" name="proj_id" th:value="${project.proj_id}">
                                 <div class="form-floating mb-3">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" id="proj_name" th:value="${project.proj_name}" name="proj_name" type="text" placeholder="프로젝트 명" required/>
-                                            <label for="proj_name">프로젝트 명</label>
+                                            <input class="form-control" id="edit_proj_name" th:value="${project.proj_name}" name="proj_name" type="text" placeholder="프로젝트 명" required/>
+                                            <label for="edit_proj_name">프로젝트 명</label>
                                         </div>
                                     </div>
+                                    <p id="edit_message"></p>
                                 </div>
                                 <hr>
                                 <div id="selectContainer">
@@ -51,7 +52,7 @@
                                             <div style="display: flex; align-items: center">
                                             <label for="importance"></label>
                                             <select class="form-select mb-md-3 member1" style="width: 70%; margin-right:1rem;" id="importance" name="importance">
-                                                <option value="50" th:selected="${projMember.get('importance') == 50}">STAFF</option>
+                                                <option value="50" th:selected="${projMember.get('importance') <= 50}">STAFF</option>
                                                 <option value="80" th:selected="${projMember.get('importance') == 80}">DPM</option>
                                                 <option value="100" th:selected="${projMember.get('importance') == 100}">PM</option>
                                             </select>

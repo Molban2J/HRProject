@@ -18,6 +18,8 @@ public class Project {
     //ProjectStat stat;   //프로젝트 상태(진행중,완료)
     Date start_date;   //시작 날짜
     Date end_date;     //종료 날짜
+    int category;   //프로젝트 분류 카테고리 fk
+    int budget; //예산
     //Integer proj_head;   //프로젝트 책임자 id  fk -> ProjectMember에서 importance가 100인 사람이 책임자로 하는걸로
 
 }

@@ -39,6 +39,12 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     }
 
-
+    // const projectTable = document.getElementById('projectTable');
+    // if (projectTable) {
+    //     new simpleDatatables.DataTable(projectTable,{
+    //         perPage: 5,
+    //         search: false
+    //     });
+    // }
 
 });

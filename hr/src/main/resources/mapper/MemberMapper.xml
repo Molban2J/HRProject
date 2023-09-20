@@ -5,7 +5,7 @@
 <mapper namespace="com.hr.mapper.MemberMapper">
     <!-- 전체 사원 목록-->
     <select id="findAll" resultType="com.hr.domain.Member">
-        select * from Member
+        select * from Member order by status
     </select>
 
     <!--이름으로 정보 조회 -->

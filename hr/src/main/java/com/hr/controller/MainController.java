@@ -38,7 +38,22 @@ public class MainController {
         this.chartService = chartService;
         this.dwlService = dwlService;
     }
-    
+    @GetMapping("/main")
+    public String frontGET(Model model){
+        log.info("front GET 실행");
+
+        //design waiting list
+        model.addAttribute("dwl", dwlService.getAllDWL());
+        //design waiting list + 각 프로젝트 참여 멤버 리스트
+        model.addAttribute("dwlMemberList", dwlService.getAllDWLMember());
+        model.addAttribute("projectList", projectService.findAllProjects());
+        model.addAttribute("projectMemberList", projectService.findAllProjectMembers());
+        //사원 전체 목록
+        model.addAttribute("memberList", memberService.getMemberList());
+        // 전체 프로젝트 카테고리 리스트
+        model.addAttribute("categories", projectService.findAllCategories());
+        return "front";
+    }
     //홈 화면
     @GetMapping("/")
     public String mainGET(Model model) {

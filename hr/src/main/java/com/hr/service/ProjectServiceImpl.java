@@ -1,5 +1,6 @@
 package com.hr.service;
 
+import com.hr.domain.ProjCategory;
 import com.hr.domain.Project;
 import com.hr.domain.ProjectMember;
 import com.hr.mapper.ProjectMapper;
@@ -67,6 +68,11 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteProjectMember(int proj_id) {
         projectMapper.deleteProjectMember(proj_id);
+    }
+
+    @Override
+    public List<ProjCategory> findAllCategories() {
+        return projectMapper.findAllCategories();
     }
 
     @Override

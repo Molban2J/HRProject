@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>NewMedia Sample</title>
+    <link href="/css/front.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <script src="/js/datatables-simple-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div id="wrapper">
+
+    <header>
+
+    </header>
+    <main>
+        <div class="content">
+            <img class="newBornLabLogo" src="/assets/img/newborlablogo.png" alt="뉴본랩 로고">
+            <div class="project">
+                <table id="projectTable" class="projectTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>정</th>
+                        <th>부</th>
+                        <th class="member-col">
+                            <div class="projectMember">1</div>
+                            <div class="projectMember">2</div>
+                            <div class="projectMember">3</div>
+                            <div class="projectMember">4</div>
+                            <div class="projectMember">5</div>
+                        </th>
+
+                        <th class="border-top border-left">기간</th>
+                        <th class="border-top">예산</th>
+                        <th class="border-top border-right">비고</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="project:${projectList}">
+                        <td>
+                            <div class="projectImg">
+                                <img th:src="'/assets/img/project/'+${project.proj_id}+'.png'"
+                                     th:alt="${project.proj_name}">
+                            </div>
+                        </td>
+                        <td class="projectName-td">
+                            <div class="projectName" th:text="${project.proj_name}"></div>
+                        </td>
+                        <td>
+                            <div class="category" th:each="category:${categories}"
+                                 th:if="${category.cat_id == project.category}"
+                                 th:text="${category.category}"></div>
+                        </td>
+                        <td class="pm">
+                            <div class="projectMember" th:each="member:${projectMemberList}"
+                                 th:if="${project.proj_name == member.proj_name && member.importance ==100}"
+                            ><img th:src="'/assets/img/member/'+${member.m_num}+'_'+${member.name}+'.png'"
+                                  th:alt="${member.name}"></div>
+                        </td>
+                        <td class="dpm">
+                            <div th:each="member:${projectMemberList}" class="projectMember"
+                                 th:if="${project.proj_name == member.proj_name && member.importance ==80}"
+                            ><img th:src="'/assets/img/member/'+${member.m_num}+'_'+${member.name}+'.png'"
+                                  th:alt="${member.name}"></div>
+                        </td>
+                        <td class="member-td">
+                            <div class="member-col">
+                                <div class="projectMember" th:each="member:${projectMemberList}"
+                                     th:if="${project.proj_name == member.proj_name && member.importance <80 }"
+                                ><img th:src="'/assets/img/member/'+${member.m_num}+'_'+${member.name}+'.png'"
+                                      th:alt="${member.name}"></div>
+                            </div>
+                        </td>
+
+                        <td th:class="${projectList.indexOf(project) == projectList.size()-1 ? 'period border-left border-bottom':'period border-left'}"
+                            th:text="${#dates.format(project.start_date, 'yyyy-MM-dd')}+' ~ '+${project.end_date == null ? '':#dates.format(project.end_date, 'yyyy-MM-dd')}"></td>
+                        <td th:class="${projectList.indexOf(project) == projectList.size()-1 ? 'budget border-bottom':'budget'}"
+                            th:text="${project.budget == 0 ? ' - ': project.budget}"></td>
+                        <td th:class="${projectList.indexOf(project) == projectList.size()-1 ? 'desc border-right border-bottom':'desc border-right'}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</div>
+</body>
+
+</html>

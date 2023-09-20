@@ -1,5 +1,6 @@
 package com.hr.mapper;
 
+import com.hr.domain.ProjCategory;
 import com.hr.domain.Project;
 import com.hr.domain.ProjectMember;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,5 +30,8 @@ public interface ProjectMapper {
     void updateProject(Project project);
 
     void deleteProjectMember(int proj_id);
+
+    List<ProjCategory> findAllCategories();
+
 
 }

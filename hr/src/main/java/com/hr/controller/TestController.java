@@ -25,11 +25,11 @@ public class TestController {
 //        log.info("error500Test 접속");
 //        return "originSource/401";
 //    }
-//    @GetMapping("/chart")
-//    public String chartTest(){
-//        log.info("chartTest 접속");
-//        return "originSource/charts";
-//    }
+    @GetMapping("/chart")
+    public String chartTest(){
+        log.info("chartTest 접속");
+        return "originSource/charts";
+    }
 //    @GetMapping("/login")
 //    public String loginTest(){
 //        log.info("loginTest 접속");
@@ -45,11 +45,30 @@ public class TestController {
 //        log.info("registerTest 접속");
 //        return "originSource/register";
 //    }
-//    @GetMapping("/table")
-//    public String tableTest(){
-//        log.info("tableTest 접속");
-//        return "originSource/tables";
-//    }
+    @GetMapping("/table")
+    public String tableTest(){
+        log.info("tableTest 접속");
+        return "originSource/tables";
+    }
+
+    @GetMapping("/maundy")
+    public String maundyTest(){
+        log.info("tableTest 접속");
+        return "originSource/maundy_index";
+    }
+
+    @GetMapping("/squad")
+    public String squadTest(){
+        log.info("tableTest 접속");
+        return "originSource/squad_index";
+    }
+
+    @GetMapping("/maxim")
+    public String maximTest(){
+        log.info("tableTest 접속");
+        return "originSource/maxim_index";
+    }
+
 
 
 }

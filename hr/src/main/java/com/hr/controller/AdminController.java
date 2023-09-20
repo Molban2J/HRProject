@@ -205,6 +205,26 @@ public class AdminController {
         return "/admin/project/addProject";
     }
 
+    //project add name duplication check
+    @PostMapping("/projNameCheck.do")
+    @ResponseBody
+    public Map<String, Object> projNameCheckPOST(@RequestParam String projNameValue){
+        //log.info("projNameCheck Post 실행");
+        Project project = projectService.findProjectByProjName(projNameValue);
+        String message;
+        int pass = 0;
+        if(project != null){
+            message = "중복된 프로젝트가 있습니다. 다른 이름을 입력해주세요.";
+        } else {
+            message = "사용 가능한 프로젝트 명입니다.";
+            pass = 1;
+        }
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("pass", pass);
+        msg.put("message", message);
+       return msg;
+    }
+
     //project add post
     @PostMapping("/addProject.do")
     public String addProjectPOST(@RequestParam List<Integer> importance, @RequestParam List<Integer> m_num, Project project) {
@@ -237,6 +257,34 @@ public class AdminController {
         model.addAttribute("memberList", memberService.getMemberList());
         return "/admin/project/editProject";
     }
+
+    //project edit name duplication check
+    @PostMapping("/editProjNameCheck.do")
+    @ResponseBody
+    public Map<String, Object> editProjNameCheckPOST(@RequestParam Map<String, Object> projValue){
+        //log.info("editProjNameCheck POST 실행");
+        int proj_seq = Integer.parseInt((String)projValue.get("projSeqValue"));
+        Project project = projectService.findProjectByProjName((String)projValue.get("projNameValue"));
+        Project originProject = projectService.findProjectByProjId(proj_seq);
+        String message;
+        int pass = 0;
+        if(((String)projValue.get("projNameValue")).equals(originProject.getProj_name())){
+            pass = 1;
+            message = "";
+        } else if (project != null && project.getProj_id() != proj_seq){
+            message = "중복된 프로젝트가 있습니다. 다른 이름으로 수정해주세요.";
+        } else {
+            message = "수정 가능한 이름입니다";
+            pass = 1;
+        }
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("pass",pass);
+        msg.put("message", message);
+        //log.info("msg = "+msg);
+        return msg;
+
+    }
+
 
     @PostMapping("/editProject.do")
     public String editProjectPOST(@RequestParam List<Integer> importance, @RequestParam List<Integer> m_num, Project project) {

@@ -24,7 +24,8 @@
         select
             pm.importance,
             p.proj_name,
-            m.name
+            m.name,
+            m.m_num
         from
             ProjectMember pm
                 LEFT JOIN
@@ -96,4 +97,10 @@
         where proj_id = #{proj_id}
 
     </delete>
+
+    <select id="findAllCategories" resultType="com.hr.domain.ProjCategory">
+        select * from ProjCategory
+    </select>
+
+
 </mapper>
