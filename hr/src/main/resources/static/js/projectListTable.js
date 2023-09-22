@@ -199,6 +199,35 @@ $(document).ready(
 
         $('.proj_edit_button').click(function () {
 
+            const projValue = {projNameValue: $('#edit_proj_name').val(),
+                projSeqValue : $('#proj_id').val()};
+
+
+            $.ajax({
+                    url: "/admin/editProjNameCheck.do",
+                    type: "post",
+                    data: projValue,
+                    dataType: "json",
+                    success: function(data) {
+                        const message = $("#edit_message");
+                        if (data.pass === 1) {
+                            message.removeClass("text-danger").addClass("text-success");
+                            projNamePass = true;
+                        } else {
+                            message.removeClass("text-success").addClass("text-danger");
+                            projNamePass = false;
+                        }
+                        if($('#edit_proj_name').val().length === 0){
+                            message.removeClass("text-success").addClass("text-danger");
+                            message.text("프로젝트 명을 입력해주세요");
+                            projNamePass = false;
+                        } else {
+                            message.text(data.message);
+                        }
+                    }
+                }
+            );
+
             const startDateInput = $('#start_date').val();
             if(startDateInput.length>0){
                 startDatePass = true;
